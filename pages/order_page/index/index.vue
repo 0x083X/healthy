@@ -52,6 +52,12 @@
 				customStyle="margin-top: 10px"
 				@click="reset"
 			></u-button>
+			<u-button
+				type="primary"
+				text="微信支付"
+				customStyle="margin-top: 10px"
+				@click="wxPay"
+			></u-button>
 		</view>
 	</view>
 </template>
