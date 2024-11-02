@@ -4,12 +4,14 @@ import App from './App'
 import Vue from 'vue'
 import './uni.promisify.adaptor'
 import uView from 'uview-ui'
+import store from 'store/index.js'
 import Md5 from 'js-md5'
 Vue.prototype.$md5 = Md5
 Vue.use(uView)
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
+	store,
   ...App
 })
 app.$mount()

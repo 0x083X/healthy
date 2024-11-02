@@ -12,6 +12,11 @@ js-md5@^0.8.3:
   resolved "https://registry.npmmirror.com/js-md5/-/js-md5-0.8.3.tgz#921bab7efa95bfc9d62b87ee08a57f8fe4305b69"
   integrity sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==
 
+uview-ui@2.0.38:
+  version "2.0.38"
+  resolved "https://registry.npmmirror.com/uview-ui/-/uview-ui-2.0.38.tgz#02a0585f2c966a81c2997c79cfff0e8538a89c61"
+  integrity sha512-6egHDf9lXHKpG3hEjRE0vMx4+VWwKk/ReTf5x18KrIKqdvdPRqO3+B8Unh7vYYwrIxzAWIlmhZ9RJpKI/4UqPQ==
+
 vuex@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npmmirror.com/vuex/-/vuex-4.1.0.tgz#aa1b3ea5c7385812b074c86faeeec2217872e36c"
