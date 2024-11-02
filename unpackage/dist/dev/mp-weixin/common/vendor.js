@@ -9466,9 +9466,15 @@ internalMixin(Vue);
 
 /***/ }),
 /* 26 */
+<<<<<<< HEAD
 /*!**********************************!*\
   !*** D:/work/healthy/pages.json ***!
   \**********************************/
+=======
+/*!******************************************!*\
+  !*** D:/others_codes/healthy/pages.json ***!
+  \******************************************/
+>>>>>>> feature/zxl
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9612,9 +9618,15 @@ function normalizeComponent (
 
 /***/ }),
 /* 33 */
+<<<<<<< HEAD
 /*!************************************************!*\
   !*** D:/work/healthy/uni.promisify.adaptor.js ***!
   \************************************************/
+=======
+/*!********************************************************!*\
+  !*** D:/others_codes/healthy/uni.promisify.adaptor.js ***!
+  \********************************************************/
+>>>>>>> feature/zxl
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9634,6 +9646,7 @@ uni.addInterceptor({
 });
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
+<<<<<<< HEAD
 /***/ }),
 /* 34 */
 /*!**************************************!*\
@@ -10993,6 +11006,8 @@ var user = {
 var _default = user;
 exports.default = _default;
 
+=======
+>>>>>>> feature/zxl
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

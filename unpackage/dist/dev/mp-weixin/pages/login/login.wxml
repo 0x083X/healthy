@@ -1,1 +1,0 @@
-<view class="content"><view class="header"></view><view class="main"></view><view class="footer"><button type="default" data-event-opts="{{[['tap',[['handleLogin',['$event']]]]]}}" bindtap="__e">登陆</button></view></view>

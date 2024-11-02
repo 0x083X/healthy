@@ -1,6 +1,11 @@
 {
   "pages": [
+<<<<<<< HEAD
     "pages/login/login"
+=======
+    "pages/index/index",
+    "pages/order_page/index/index"
+>>>>>>> feature/zxl
   ],
   "subPackages": [],
   "window": {
@@ -9,5 +14,13 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
+<<<<<<< HEAD
+=======
+  "permission": {
+    "scope.userLocation": {
+      "desc": "1212"
+    }
+  },
+>>>>>>> feature/zxl
   "usingComponents": {}
 }
