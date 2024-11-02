@@ -139,7 +139,9 @@
 					id: 1,
 					latitude: 23.099994,
 					longitude: 113.324520,
-					name: 'T.I.T 创意园'
+					name: 'T.I.T 创意园',
+					width: '25',
+					height: '25',
 				}],
 				// 需求说明
 				requirementValue: '',
@@ -194,6 +196,8 @@
 							latitude: res.latitude,
 							longitude: res.longitude,
 							iconPath: '../../../static/img/pos.png',
+							width: '20',
+							height: '20',
 						}]
 						that.circles = [{ //在地图上显示圆
 							latitude: res.latitude,
