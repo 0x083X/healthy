@@ -7,87 +7,51 @@
 			</view>
 			<map id="myMap" style="width: 100%; height: 280px;" :latitude="latitude" :longitude="longitude"
 				:markers="markers" show-location></map>
-			<form @submit="handleSubmitForm" @reset="formReset">
-				<view class="form_item contact_number">
-					<view class="item_label">
-						<text>联系电话</text>
-					</view>
-					<input type="item_value" placeholder="请输入联系电话" />
-				</view>
-				<view class="form_item gender_select">
-					<view class="item_label">性别</view>
-					<radio-group name="gender_group">
-						<label>
-							<radio value="1" /><text>男</text>
-						</label>
-						<label>
-							<radio value="0" /><text>女</text>
-						</label>
-						<label>
-							<radio value="2" /><text>沃尔玛塑料袋</text>
-						</label>
-					</radio-group>
-				</view>
-				<view class="form_item requirement_state">
-					<view class="common_content">
-						<view class="item_label">
-							<text>需求说明</text>
-						</view>
-						<radio-group name="checkbox" @change="handleSelectRequire">
-							<label>
-								<radio value="1" /><text>医院检查</text>
-							</label>
-							<label>
-								<radio value="2" /><text>挂号打点滴</text>
-							</label>
-							<label>
-								<radio value="3" /><text>小型手术陪护</text>
-							</label>
-							<label>
-								<radio value="4" /><text>住院陪护</text>
-							</label>
-							<label>
-								<radio value="5" /><text>其他</text>
-							</label>
-						</radio-group>
-					</view>
-					<view v-if="requirementValue == 5" class="other_requirement_content">
-						<textarea name="other_requirement_value" id="other_requirement_value" cols="30" rows="10"
-							placeholder="请输入其他需求说明"></textarea>
-					</view>
-				</view>
-				<view class="form_item contract_way">
-					<view class="item_label">
-						<text>如何联系您</text>
-					</view>
-					<radio-group name="contract_way_group">
-						<label>
-							<radio value="1" /><text>电话联系</text>
-						</label>
-						<label>
-							<radio value="0" /><text>微信联系</text>
-						</label>
-						<label>
-							<radio value="2" /><text>短信联系</text>
-						</label>
-						<label>
-							<radio value="2" /><text>按时到达地点之后联系</text>
-						</label>
-					</radio-group>
-				</view>
-				<view class="form_item contract_way">
-					<view class="item_label">
-						<text>就诊人特殊情况以及特殊要去说明</text>
-					</view>
-					<textarea name="special_instructions" id="special_instructions" cols="0" rows="10"
-						placeholder="例如:老人或幼童/或者患者有传染可能"></textarea>
-				</view>
-				<view class="button_group">
-					<button form-type="submit">Submit</button>
-					<button type="default" form-type="reset">Reset</button>
-					<button @click="wxPay">发起支付</button>
-				</view>
-			</form>
+			<!-- start -->
+			<u--form labelPosition="left" :model="formData" ref="form">
+				<u-form-item label="联系电话" prop="phone_number" borderBottom ref="form">
+					<u--input v-model="formData.phone_number" border="none" placeholder="请输入联系电话">联系电话</u--input>
+				</u-form-item>
+				<u-form-item label="陪诊人性别" prop="sex" borderBottom @click="showSex = true; hideKeyboard()">
+					<u--input disabled disabledColor="#ffffff" placeholder="请选择性别" border="none"></u--input>
+					<u-icon slot="right" name="arrow-right"></u-icon>
+				</u-form-item>
+				<u-form-item label="需求说明" prop="requirement" borderBottom
+					@click="showRequirement = true; hideKeyboard()">
+					<u--input disabled disabledColor="#ffffff" placeholder="请选择您的需求" border="none"></u--input>
+					<u-icon slot="right" name="arrow-right"></u-icon>
+				</u-form-item>
+				<u-form-item label="如何联系您" prop="contractWay" borderBottom
+					@click="showContractWay = true; hideKeyboard()">
+					<u--input disabled disabledColor="#ffffff" placeholder="请选择如何联系您" border="none"></u--input>
+					<u-icon slot="right" name="arrow-right"></u-icon>
+				</u-form-item>
+				<u-form-item label="就诊人特殊情况以及特殊要去说明" prop="radiovalue1" borderBottom ref="item2">
+					<u--textarea v-model="formData.instructions" placeholder="例如:老人或者幼童,或者患者有传染可能" ></u--textarea>
+				</u-form-item>
+			</u--form>
+			<!-- end -->
+			<u-action-sheet :show="showSex" :actions="sexArray" title="请选择性别" @close="showSex = false"
+				@select="sexSelect">
+			</u-action-sheet>
+			<u-action-sheet :show="showRequirement" :actions="requirementArray" title="请选择您的需求"
+				@close="showRequirement = false" @select="reuquirementSelect">
+			</u-action-sheet>
+			<u-action-sheet :show="showContractWay" :actions="contractWayArray" title="请选择您的需求"
+				@close="showContractWay = false" @select="contractWaySelect">
+			</u-action-sheet>
+			<u-button
+				type="primary"
+				text="提交"
+				customStyle="margin-top: 50px"
+				@click="submit"
+			></u-button>
+			<u-button
+				type="error"
+				text="重置"
+				customStyle="margin-top: 10px"
+				@click="reset"
+			></u-button>
 		</view>
 	</view>
 </template>
@@ -105,6 +69,65 @@
 				// 初始化的中心位置
 				latitude: 23.099994,
 				longitude: 113.324520,
+				// 表单数据
+				formData: {
+					phone_number: '',
+					sex: 1,
+					requiement: 0,
+					contractWay: 0,
+					instructions: ''
+				},
+				showSex: false,
+				showRequirement: false,
+				showContractWay: false,
+				sexArray: [{
+						name: '男',
+						value: 1
+					},
+					{
+						name: '女',
+						value: 0
+					},
+					{
+						name: '不限',
+						value: 2
+					},
+				],
+				requirementArray: [{
+						name: '医院检查',
+						value: 0
+					},
+					{
+						name: '挂号打点滴',
+						value: 1
+					},
+					{
+						name: '小型手术陪护',
+						value: 2
+					},
+					{
+						name: '住院陪护',
+						value: 3
+					},
+				],
+				contractWayArray: [
+					{
+						name: '电话联系',
+						value: 0
+					},
+					{
+						name: '微信联系',
+						value: 1
+					},
+					{
+						name: '短信联系',
+						value: 2
+					},
+					{
+						name: '按时到达地点之后联系',
+						value: 3
+					},
+				],
 				// 标记点
 				markers: [{
 					id: 1,
@@ -181,48 +204,32 @@
 			handleSelectRequire(event) {
 				this.requirementValue = event.detail.value || ''
 				console.log('requirementValue', this.requirementValue);
-			}
-
+			},
+			// TODO
+			sexSelect(e) {
+				this.formData.sex = e.value
+				this.$refs.form.validateField('formData.sex')
+			},
+			reuquirementSelect(e) {
+				this.formData.requiement = e.value
+				this.$refs.form.validateField('formData.requiement')
+			},
+			contractWaySelect(e) {
+				this.formData.contractWay = e.value
+				this.$refs.form.validateField('formData.contractWay')
+			},
+			getItemValue(arr,index){
+				return arr.filter(item => item.value == index).name
+			},
+			hideKeyboard() {
+				uni.hideKeyboard()
+			},
+			submit(){},
+			reset(){},
 		}
 	}
 </script>
 
 <style>
-	/* .order_container {
-		height: 100%;
 
-		.form_item {
-			display: flex;
-			align-items: center;
-			height: 44px;
-			padding: 10px;
-
-			.item_label {
-				padding-right: 8px;
-			}
-
-			.common_content {
-				display: flex;
-				align-items: center;
-			}
-		}
-
-		.requirement_state {
-			display: flex;
-			flex-direction: column;
-		}
-
-		.other_requirement_content {
-			width: 100%;
-		}
-
-		#other_requirement_value {
-			width: 100%;
-			height: 60px;
-		}
-
-		#special_instructions {
-			height: 42px;
-		}
-	} */
 </style>
