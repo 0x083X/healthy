@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/order_page/index/index"
+    "pages/order_page/index/index",
+    "pages/index/11/11"
   ],
   "subPackages": [],
   "window": {

@@ -7,7 +7,13 @@
 			}
 		},
 		{
-			"path" : "pages/order_page/index/index",
+			"path": "pages/order_page/index/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path" : "pages/index/11/11",
 			"style" : 
 			{
 				"navigationBarTitleText" : ""
@@ -20,5 +26,9 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	}
+
 }
