@@ -27,15 +27,16 @@
 			handleLogin() {
 				uni.login({
 					provider: 'weixin',
-					success: (loginRes) => {
-						//	打印临时凭证
-						// console.log(loginRes, this)
-						this.getUserInfo()
-						debugger
+					success: async (loginRes) => {
+						// 少了将loginRes.code传给后端的步骤，传了之后后端会返回一个access_token作为token，然后会缓存该token
+						await this.getUserInfo()
+						uni.navigateTo({
+							url: '/pages/order_page/index/index'
+						})
 					}
 				});
 			},
-			getUserInfo() {
+			async getUserInfo() {
 				// 登录成功
 				uni.getUserInfo({
 				    provider: 'weixin',
