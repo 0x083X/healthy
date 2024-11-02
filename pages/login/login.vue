@@ -3,7 +3,7 @@
 		<view class="header"></view>
 		<view class="main"></view>
 		<view class="footer">
-			<button type="default" @click="handleLogin">登陆</button>
+			<u-button text="微信登录" @click="handleLogin" type="success" shape="circle"></u-button>
 		</view>
 	</view>
 </template>
@@ -86,6 +86,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		padding: 20px;
 		height: 100%;
 		.header {
 			height: 100px;
@@ -99,7 +100,7 @@
 			display: flex;
 			align-items: center;
 			padding: 15px;
-			height: 100px;
+			height: 200px;
 			width: 100%;
 		}
 	}
