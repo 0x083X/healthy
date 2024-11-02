@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "js-md5": "^0.8.3"
   }
 }

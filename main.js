@@ -4,6 +4,8 @@ import App from './App'
 import Vue from 'vue'
 import './uni.promisify.adaptor'
 import store from './store'
+import Md5 from 'js-md5'
+Vue.prototype.$md5 = Md5
 Vue.prototype.$store = store
 Vue.config.productionTip = false
 App.mpType = 'app'

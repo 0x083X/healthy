@@ -85,6 +85,7 @@
 				<view class="button_group">
 					<button form-type="submit">Submit</button>
 					<button type="default" form-type="reset">Reset</button>
+					<button @click="wxPay">发起支付</button>
 				</view>
 			</form>
 		</view>
@@ -93,7 +94,9 @@
 
 
 <script>
+	import wxmini from '../../../mixins/wxmini'
 	export default {
+		mixins: [ wxmini ],
 		data() {
 			return {
 				title: 'Hello',
