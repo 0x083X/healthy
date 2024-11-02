@@ -28,7 +28,25 @@
 				uni.login({
 					provider: 'weixin',
 					success: async (loginRes) => {
-						// 少了将loginRes.code传给后端的步骤，传了之后后端会返回一个access_token作为token，然后会缓存该token
+						// 该逻辑应该由后端操作的
+						// const code = loginRes.code
+						// const appid = "wx1af96eacc975debe"
+						// const secret = "d5e179a8fca4c23a437b8e2d5e567fcd"
+						// wx.request({
+						// 	url: 'https://api.weixin.qq.com/sns/jscode2session?appid='+appid+'&secret='+secret+'&grant_type=authorization_code&js_code=' + code,
+						// 	header: {
+						// 		'content-type': 'application/json'
+						// 	},
+						// 	success: function (result) {
+						// 		if(result.statusCode === 200) {
+						// 			console.log(result.data.openid,'openid=======');
+						// 			uni.setStorageSync('openid', result.data.openid);
+						// 			uni.setStorageSync('session_key', result.data.session_key);
+						// 			debugger
+						// 		}
+												
+						// 	}
+						// })
 						await this.getUserInfo()
 						uni.navigateTo({
 							url: '/pages/order_page/index/index'

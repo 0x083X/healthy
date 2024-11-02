@@ -58,7 +58,9 @@
 
 
 <script>
+	import wxmini from '../../../mixins/wxmini'
 	export default {
+		mixins: [ wxmini ],
 		data() {
 			return {
 				title: 'Hello',
