@@ -1,0 +1,225 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .order_container {
+	height: 100%;
+
+	.form_item {
+		display: flex;
+		align-items: center;
+		height: 44px;
+		padding: 10px;
+
+		.item_label {
+			padding-right: 8px;
+		}
+
+		.common_content {
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	.requirement_state {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.other_requirement_content {
+		width: 100%;
+	}
+
+	#other_requirement_value {
+		width: 100%;
+		height: 60px;
+	}
+
+	#special_instructions {
+		height: 42px;
+	}
+} */
+
