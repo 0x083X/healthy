@@ -5,10 +5,12 @@ import Vue from 'vue'
 import './uni.promisify.adaptor'
 import uView from 'uview-ui'
 import store from 'store/index.js'
+import { request } from './utils'
 import Md5 from 'js-md5'
 Vue.prototype.$md5 = Md5
 Vue.use(uView)
 Vue.config.productionTip = false
+Vue.prototype.$request = request
 App.mpType = 'app'
 const app = new Vue({
 	store,

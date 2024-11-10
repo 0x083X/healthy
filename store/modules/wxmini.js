@@ -5,7 +5,7 @@ const wxmini = {
 		appId: 'wx1af96eacc975debe',
 		wxPayState: {
 			nonceStr: 'hufang',
-			package: 'prepay_id=hufang',
+			package: 'prepay_id=wx201410272009395522657a690389285100',
 		}
 	}
 }

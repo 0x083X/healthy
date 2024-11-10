@@ -18,7 +18,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Geolocation" : {}
+            "Geolocation" : {},
+            "OAuth" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -57,6 +58,12 @@
                     "system" : {
                         "__platform__" : [ "ios", "android" ]
                     }
+                },
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wx49f7764d0b2507df",
+                        "UniversalLinks" : ""
+                    }
                 }
             }
         }
@@ -65,7 +72,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx1af96eacc975debe",
+        "appid" : "wx49f7764d0b2507df",
         "setting" : {
             "urlCheck" : false
         },
