@@ -84,7 +84,7 @@
 							data: JSON.stringify(data),
 							method: 'POST'
 						}).then(res => {
-							console.log(res)
+							console.log(res, 123)
 							// 缓存登录状态
 							uni.setStorageSync('token', 123)
 						}).catch(err => {
