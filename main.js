@@ -7,6 +7,7 @@ import uView from 'uview-ui'
 import store from 'store/index.js'
 import { request } from './utils'
 import Md5 from 'js-md5'
+import "uview-ui/index.scss";
 Vue.prototype.$md5 = Md5
 Vue.use(uView)
 Vue.config.productionTip = false
