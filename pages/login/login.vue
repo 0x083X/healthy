@@ -57,6 +57,7 @@
 		},
 		onLoad() {
 			const token = uni.setStorageSync('token')
+			console.log('token', token)
 			// 使用token进行登录
 			if(!token) return 
 			uni.navigateTo({
@@ -78,17 +79,20 @@
 							avatar: this.form.avatar,
 							nickName: this.form.nickName
 						}
-						console.log(JSON.stringify(data))
 						this.$request({
 							url: 'api/login/openID',
-							data: JSON.stringify(data),
+							data,
 							method: 'POST'
 						}).then(res => {
-							console.log(res, 123)
+							const msg = res.data
 							// 缓存登录状态
-							uni.setStorageSync('token', 123)
+							uni.setStorageSync('token', msg.token)
+							console.log(uni.getStorageSync('token'))
+							uni.redirectTo({
+								url: "/pages/order_page/index/index"
+							})
 						}).catch(err => {
-							console.log(err)
+							console.log(err, 'error')
 						})
 						// uni.redirectTo({
 						// 	url: '/pages/order_page/index/index'
