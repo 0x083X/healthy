@@ -224,7 +224,17 @@
 					method: 'POST',
 					data: this.formData
 				})
-				console.log('res',res);
+				const message = res?.data?.data
+				if (message) {
+					message.orderID = message.package
+					uni.navigateTo({
+						url: '/pages/pay_page/pay_page',
+						success:d=>{
+							// 当前页面的数据→传→被打开页面
+							d.eventChannel.emit('toOpenedPage', message);
+						}
+					})
+				}
 			},
 			dateTimePickerConfirm(data) {
 				this.formData.datetime = this.formatTimestamp(data.value)

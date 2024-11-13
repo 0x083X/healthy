@@ -12,7 +12,7 @@
 			<pay-type :payTypeConfig="payTypeConfig" :autoChoose="chooseMethod"></pay-type>
 		</main>
 		<footer class="footer">
-			<u-button type="success">去支付</u-button>
+			<u-button type="success" @click="wxPay(payOrderDetail)">去支付</u-button>
 		</footer>
 	</view>
 </template>
@@ -20,15 +20,22 @@
 <script>
 	import PayType from '../../component/PayType.vue'
 	import payTypeConfig from '../../utils/payTypeConfig'
+	import wxmini from '../../mixins/wxmini'
 	export default {
-			
+		onLoad(option) {
+			this.getOpenerEventChannel().on('toOpenedPage', data =>{
+				this.payOrderDetail = data
+			})
+		},
 		components: {
 			PayType,
 			chooseMethod: '微信支付'
 		},
+		mixins: [ wxmini ],
 		data() {
 			return {
-				payTypeConfig
+				payTypeConfig,
+				payOrderDetail: {},
 			}
 		},
 		methods: {
