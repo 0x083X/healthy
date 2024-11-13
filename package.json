@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "uview-ui": "2.0.38",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "js-md5": "^0.8.3"

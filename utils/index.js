@@ -8,6 +8,9 @@ export async function request(options) {
 			url: `http://${BASEURL}${url}`,
 			method,
 			data,
+			header:{
+				authorization: uni.getStorageSync("token") || ''
+			}
 		}).then(res => {
 			resolve(res)
 		}).catch(err => {
