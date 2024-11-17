@@ -57,7 +57,6 @@
 		},
 		onLoad() {
 			const token = uni.setStorageSync('token')
-			console.log('token', token)
 			// 使用token进行登录
 			if(!token) return 
 			uni.navigateTo({

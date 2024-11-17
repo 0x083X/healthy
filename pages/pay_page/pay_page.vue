@@ -5,7 +5,7 @@
 				请支付
 			</view>
 			<view class="header-amount">
-				￥0.01
+				{{ Number(payOrderDetail.totalPrice)/100 }}元
 			</view>
 		</header>
 		<main class="main">
