@@ -91,7 +91,10 @@
 								url: "/pages/order_page/index/index"
 							})
 						}).catch(err => {
-							console.log(err, 'error')
+							// console.log(err, 'error')
+							uni.showToast({
+								title: err
+							})
 						})
 						// uni.redirectTo({
 						// 	url: '/pages/order_page/index/index'
