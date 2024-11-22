@@ -92,8 +92,10 @@
 							})
 						}).catch(err => {
 							// console.log(err, 'error')
+							console.log(err)
 							uni.showToast({
-								title: err
+								title: err.errMsg,
+								icon: 'none'
 							})
 						})
 						// uni.redirectTo({
