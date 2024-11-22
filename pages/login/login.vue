@@ -13,7 +13,7 @@
 						<u--image :src="form.avatar" width="80px" height="80px"></u--image>
 					</button>
 				</u-form-item>
-				<u-form-item prop="form.nickName" label="昵称:" borderBottom>
+				<u-form-item prop="form.nickName" label="称呼:" borderBottom>
 					<u--input
 						v-model="form.nickName"
 						border="none"

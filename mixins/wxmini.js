@@ -28,11 +28,12 @@ export default {
 						method: 'GET',
 					})
 					const status = msg?.data?.data?.success
-					if (status) {
+					console.log(msg, status)
+					// if (status) {
 						uni.redirectTo({
 							url: '/pages/result/result'
 						})
-					}
+					// }
 					// 业务逻辑。。。
 				},
 				fail: function (err) {
