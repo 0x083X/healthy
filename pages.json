@@ -7,7 +7,7 @@
 			}
 		},
 		{
-			"path": "pages/order_page/index/index",
+			"path": "pages/order_page/index",
 			"style": {
 				"navigationBarTitleText": ""
 			}
@@ -21,6 +21,13 @@
 		},
 		{
 			"path" : "pages/result/result",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/order_page/pre_order",
 			"style" : 
 			{
 				"navigationBarTitleText" : ""

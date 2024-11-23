@@ -60,7 +60,7 @@
 			// 使用token进行登录
 			if(!token) return 
 			uni.navigateTo({
-				url: '/pages/order_page/index/index'
+				url: '/pages/order_page/pre_order'
 			})
 		},
 		methods: {
@@ -88,7 +88,7 @@
 							uni.setStorageSync('token', msg.token)
 							console.log(uni.getStorageSync('token'))
 							uni.redirectTo({
-								url: "/pages/order_page/index/index"
+								url: "/pages/order_page/pre_order"
 							})
 						}).catch(err => {
 							// console.log(err, 'error')
@@ -99,7 +99,7 @@
 							})
 						})
 						// uni.redirectTo({
-						// 	url: '/pages/order_page/index/index'
+						// 	url: '/pages/order_page/index'
 						// })
 					}
 				})

@@ -1,94 +1,111 @@
+<!-- 表单填写页 -->
 <template>
 	<view>
 		<view class="order_container">
 			<!-- 日期时间展示 -->
-			<map id="myMap" style="width: 100%; height: 300px;" :latitude="latitude"
-				:longitude="longitude" :markers="markers" show-location
-				@tap="getLocationInfo()"></map>
+			<map id="myMap" style="width: 100%; height: 300px;" :latitude="latitude" :longitude="longitude"
+				:markers="markers" show-location @tap="getLocationInfo()"></map>
 			<!-- start -->
-			<u--form labelPosition="left" :model="formData" ref="form" style="padding: 8px;">
-				<u-form-item label="联系电话" prop="userPhone" borderBottom label-position="top" label-width="100%"
-					style="margin-top: 8px;">
-					<u-input v-model="formData.userPhone" border="none" placeholder="请输入联系电话"></u-input>
-				</u-form-item>
-				<u-form-item label="年龄" prop="userAge" borderBottom label-position="top" label-width="100%"
-					style="margin-top: 8px;">
-					<u-input v-model="formData.userAge" border="none" placeholder="请输入年龄"></u-input>
-				</u-form-item>
-				<u-form-item label="请选择预约开始时间" prop="startTime" borderBottom label-position="top" label-width="100%"
-					style="margin-top: 8px;" @click="showStartTimeBoard">
-					<u-input v-model="formData.startTime" disabled disabledColor="#ffffff" placeholder="请输入就诊时间"
-						border="none"></u-input>
-					<u-icon slot="right" name="arrow-right"></u-icon>
-				</u-form-item>
-				<u-form-item label="请选择预约结束时间" prop="endTime" borderBottom label-position="top" label-width="100%"
-					style="margin-top: 8px;" @click="endTimeShow = true; hideKeyboard()">
-					<u-input v-model="formData.endTime" disabled disabledColor="#ffffff" placeholder="请输入就诊时间"
-						border="none"></u-input>
-					<u-icon slot="right" name="arrow-right"></u-icon>
-				</u-form-item>
-				<u-form-item label="陪诊人性别" prop="requireGender" borderBottom label-position="top" label-width="100%">
-					<u-radio-group v-model="requireGender" placement="row" @change="changeGender">
-						<u-radio :customStyle="{marginRight: '12px', marginTop: '8px'}"
-							v-for="(item, index) in sexArray" :key="item.value" :label="item.name" :name="item.value">
-						</u-radio>
-					</u-radio-group>
-				</u-form-item>
-				<u-form-item label="需求说明" prop="userDescription" borderBottom label-position="top" label-width="100%">
-					<u-input type="textarea" v-model="formData.userDescription" placeholder="请输入您的需求" :border="false"
-						:maxlength="100" height="200"></u-input>
-				</u-form-item>
-				<u-form-item label="如何联系您" prop="contact" borderBottomss @click="showcontactWay = true; hideKeyboard()"
-					label-position="top" label-width="100%">
-					<u-input v-model="contactItem" disabled disabledColor="#ffffff" placeholder="请选择如何联系您"
-						border="none"></u-input>
-					<u-icon slot="right" name="arrow-right"></u-icon>
-				</u-form-item>
-				<u-form-item label="就诊人特殊情况以及特殊要去说明" prop="risk_content" borderBottom ref="item2" label-position="top"
-					label-width="100%">
-					<u-input type="textarea" v-model="formData.risk_content" placeholder="例如:老人或者幼童,或者患者有传染可能"
-						:border="false" :maxlength="100" height="200"></u-input>
-				</u-form-item>
-			</u--form>
+			<div class="form_container">
+				<u--form labelPosition="left" :model="formData" ref="form" style="padding: 8px;">
+					<u-form-item label="姓名" prop="userName" borderBottom label-position="top" label-width="100%"
+						style="margin-top: 8px;">
+						<u-input v-model="formData.userName" border="none" placeholder="请输入姓名"></u-input>
+					</u-form-item>
+					<u-form-item label="联系电话" prop="userPhone" borderBottom label-position="top" label-width="100%"
+						style="margin-top: 8px;">
+						<u-input v-model="formData.userPhone" border="none" placeholder="请输入联系电话"></u-input>
+					</u-form-item>
+					<u-form-item label="年龄" prop="userAge" borderBottom label-position="top" label-width="100%"
+						style="margin-top: 8px;">
+						<u-input v-model="formData.userAge" border="none" placeholder="请输入年龄"></u-input>
+					</u-form-item>
+					<u-form-item label="请选择预约开始时间" prop="startTime" borderBottom label-position="top" label-width="100%"
+						style="margin-top: 8px;" @click="showStartTimeBoard()">
+						<u-input v-model="formData.startTime" disabled disabledColor="#ffffff" placeholder="请输入就诊时间"
+							border="none"></u-input>
+						<u-icon slot="right" name="arrow-right"></u-icon>
+					</u-form-item>
+					<u-form-item label="请选择预约结束时间" prop="endTime" borderBottom label-position="top" label-width="100%"
+						style="margin-top: 8px;" @click="showEndTimeBoard()">
+						<u-input v-model="formData.endTime" disabled disabledColor="#ffffff" placeholder="请输入就诊时间"
+							border="none"></u-input>
+						<u-icon slot="right" name="arrow-right"></u-icon>
+					</u-form-item>
+					<u-form-item label="您希望陪诊人性别" prop="requireGender" borderBottom label-position="top"
+						label-width="100%">
+						<u-radio-group v-model="requireGender" placement="row" @change="changeGender">
+							<u-radio :customStyle="{marginRight: '12px', marginTop: '8px'}"
+								v-for="(item, index) in sexArray" :key="item.value" :label="item.name"
+								:name="item.value">
+							</u-radio>
+						</u-radio-group>
+					</u-form-item>
+					<u-form-item label="需求说明" prop="userDescription" borderBottom label-position="top"
+						label-width="100%">
+						<u-input type="textarea" v-model="formData.userDescription" placeholder="请输入您的需求"
+							:border="false" :maxlength="100" height="200"></u-input>
+					</u-form-item>
+					<u-form-item label="如何联系您" prop="contact" borderBottomss
+						@click="showcontactWay = true; hideKeyboard()" label-position="top" label-width="100%">
+						<u-input v-model="contactItem" disabled disabledColor="#ffffff" placeholder="请选择如何联系您"
+							border="none"></u-input>
+						<u-icon slot="right" name="arrow-right"></u-icon>
+					</u-form-item>
+					<u-form-item label="就诊人特殊情况以及特殊要去说明" prop="risk_content" borderBottom ref="item2"
+						label-position="top" label-width="100%">
+						<u-input type="textarea" v-model="formData.risk_content" placeholder="例如:老人或者幼童,或者患者有传染可能"
+							:border="false" :maxlength="100" height="200"></u-input>
+					</u-form-item>
+				</u--form>
+			</div>
 			<!-- end -->
 			<u-action-sheet :show="showcontactWay" :actions="contactWayArray" title="请选择如何联系您"
 				@close="showcontactWay = false" @select="contactWaySelect">
 			</u-action-sheet>
 			<!-- 初始时间选择 -->
 			<u-datetime-picker :show="startTimeShow" :minDate="initTime" mode="datetime" :formatter="setFormatter"
-				@confirm="handleSelectStartTime"></u-datetime-picker>
+				@confirm="handleSelectStartTime" @cancel="this.startTimeShow = false"></u-datetime-picker>
 			<!-- 结束时间选择 -->
-			<u-datetime-picker :show="endTimeShow" :minDate="initTime" mode="datetime" :formatter="setFormatter"
-				@confirm="handleSelectEndTime"></u-datetime-picker>
+			<u-datetime-picker :show="endTimeShow"
+				:minDate="formatTimestampDelay(1,formatTimestampString(formData.startTime))" mode="datetime"
+				:formatter="setFormatter" @confirm="handleSelectEndTime"
+				@cancel="this.endTimeShow = false"></u-datetime-picker>
 			<!-- 加急单展示 -->
-			<u-modal :show="urgentOrderShow" title="订单提示" confirmText="确认"
-				@confirm="this.urgentOrderShow = false">
+			<u-modal :show="urgentOrderShow" title="订单提示" confirmText="确认" @confirm="this.urgentOrderShow = false">
 				<view>当前订单为{{ isUprentScope ? "加急订单" : "预约订单" }} 订单金额为{{ Number(totalPrice)/100 }}元</view>
 			</u-modal>
 			<!-- 订单信息二次提示 -->
-			<u-modal :show="orderDetailShow" title="订单提示" confirmText="去支付" cancelText="取消" :showCancelButton="true" @confirm="submit" @cancel="orderDetailShow = false">
-				<view>您在{{ formData.startTime }}-{{ formData.endTime }}在合肥市人民第一医院
-					预定了时长为{{ duration }}小时 金额为{{ Number(totalPrice)/100 }}元的{{ isUprentScope ? '加急订单' : '预约订单' }}</view>
+			<u-modal :show="orderDetailShow" title="订单提示" confirmText="去支付" cancelText="取消" :showCancelButton="true"
+				@confirm="submit" @cancel="orderDetailShow = false">
+				<view>您在合肥市人民第一医院
+					<view>
+						<view>于{{ formData.startTime }}-{{ formData.endTime }}预定了时长为{{ duration }}小时</view>
+						<view>金额为{{ Number(totalPrice)/100 }}元的{{ isUprentScope ? '加急订单' : '预约订单' }}</view>
+					</view>
+				</view>
 			</u-modal>
 			<!-- 错误提示 -->
 			<u-toast ref="uToast"></u-toast>
-			<u-button type="primary" text="提交" customStyle="margin-top: 50px" @click="this.orderDetailShow = true"></u-button>
+			<u-button type="primary" text="提交" customStyle="margin-top: 50px"
+				@click="this.orderDetailShow = true" size="large"></u-button>
 		</view>
 	</view>
 </template>
 
 
 <script>
-	import wxmini from '../../../mixins/wxmini'
+	import wxmini from '../../mixins/wxmini'
 	import {
 		request
-	} from '../../../utils'
+	} from '../../utils'
 	export default {
 		mixins: [wxmini],
 		data() {
 			return {
 				// 表单数据
 				formData: {
+					userName: '',
 					userPhone: '',
 					userAge: '',
 					datetime: '',
@@ -99,6 +116,27 @@
 					contact: 0,
 					risk_content: '',
 					address: '合肥市第一人民医院',
+				},
+				rules: {
+					userPhone: [{
+							required: false,
+						},
+						{
+							// 自定义验证函数
+							validator: (rule, value, callback) => {
+								// 返回true表示校验通过，返回false表示不通过
+								// 过滤第一层，先判断输入为不为空，因为required: false，不是必填项，所以为空应该返回true
+								if (value) {
+									return this.$u.test.mobile(value);
+								} else {
+									return true
+								}
+							},
+							message: '手机号码不正确',
+							// 触发器可以同时用blur和change
+							trigger: ['blur'],
+						}
+					],
 				},
 				city: '',
 				showcontactWay: false,
@@ -186,6 +224,9 @@
 			this.initTime = this.formatTimestampDelay()
 			this.getLocationInfo()
 		},
+		onReady() {
+			this.$refs.form.setRules(this.rules);
+		},
 		computed: {
 			contactItem() {
 				const index = this.contactWayArray.findIndex(item => item.value === this.formData.contact)
@@ -193,6 +234,7 @@
 			},
 		},
 		methods: {
+			// 手机号正则   1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}
 			// 时间戳转日期
 			formatTimestamp(timestamp) {
 				let date = new Date(timestamp);
@@ -202,13 +244,12 @@
 				let hour = date.getHours();
 				return year + '-' + month + '-' + day + ' ' + hour + ':00:00';
 			},
-			// 初始化时间推迟一小时
-			formatTimestampDelay() {
+			// 时间推迟x小时
+			formatTimestampDelay(delayTime, startTime) {
 				var date = new Date();
+				// 初始化时间
 				var date1 = new Date().getTime(); // 获取当前时间戳
-
-				// 当前时间戳+3600s（一小时，其他时间通过计算时间戳进行相应加减），重新设置 Date 对象
-				return date.setTime(date1 + 3600000);
+				return date.setTime((startTime ? startTime : date1) + (delayTime ? 3600000 * Number(delayTime) : 3600000));
 			},
 			// 日期转时间戳
 			formatTimestampString(time) {
@@ -243,7 +284,7 @@
 					}
 				});
 			},
-			chooseLocationInfo(){
+			chooseLocationInfo() {
 				let that = this;
 				uni.getLocation({
 					type: "gcj02",
@@ -303,6 +344,12 @@
 				this.hideKeyboard()
 			},
 			showEndTimeBoard() {
+				if (!this.formData.startTime) {
+					this.$refs.uToast.show({
+						message: '请先选择订单开始时间'
+					})
+					return
+				}
 				this.initTime = this.formatTimestampDelay()
 				this.endTimeShow = true
 				this.hideKeyboard()
@@ -312,11 +359,6 @@
 				this.startTimeShow = false
 			},
 			handleSelectEndTime(time) {
-				if (!this.formData.startTime) {
-					this.$refs.uToast.show({
-						message: '请先选择订单开始时间'
-					})
-				}
 				this.formData.endTime = this.formatTimestamp(time.value)
 				this.endTimeShow = false
 				// 展示订单详情
@@ -372,11 +414,21 @@
 					method: 'POST',
 					data: formData
 				})
-				const message = res?.data?.data
-				if (message) {
-					message.orderID = message.package
-					message.totalPrice = this.totalPrice
-					this.message = message
+				const {
+					message,
+					status
+				} = res?.data
+				const data = res?.data?.data
+				if (status == 1) {
+					this.orderDetailShow = false
+					this.$refs.uToast.show({
+						message: message,
+					})
+				}
+				if (data) {
+					data.orderID = data.package
+					data.totalPrice = this.totalPrice
+					this.message = data
 					uni.navigateTo({
 						url: '/pages/pay_page/pay_page',
 						success: d => {
@@ -390,13 +442,14 @@
 	}
 </script>
 
-<style>
-	.form {
-		padding: 0 8px;
-	}
+<style lang="scss">
+	.order_container {
+		.form_container {
+			padding: 8px;
 
-	.u-form-item__body {
-		margin-top: 8rpx;
-		padding: 8px;
+			.u-form-item__body__right__message {
+				margin-left: 0 !important;
+			}
+		}
 	}
 </style>
