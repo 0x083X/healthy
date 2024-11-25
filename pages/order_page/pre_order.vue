@@ -1,5 +1,6 @@
 <template>
 	<view class="pre_order_page">
+		这是首页
 		<u-button type="primary" text="去下单" @click="goToOrder"></u-button>
 	</view>
 </template>
@@ -14,7 +15,7 @@
 		methods: {
 			goToOrder() {
 				uni.navigateTo({
-					url: "/pages/order_page/index"
+					url: "/pages/order_list/order_list"
 				})
 			}
 		}

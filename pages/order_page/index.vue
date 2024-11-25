@@ -14,7 +14,7 @@
 					</u-form-item>
 					<u-form-item label="联系电话" prop="userPhone" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;">
-						<u-input v-model="formData.userPhone" border="none" placeholder="请输入联系电话"></u-input>
+						<u-input v-model="formData.userPhone" border="none" placeholder="请输入联系电话" type="number"></u-input>
 					</u-form-item>
 					<u-form-item label="年龄" prop="userAge" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;">
