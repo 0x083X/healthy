@@ -9,7 +9,7 @@
 				<u-list-item v-for="(item, index) in listData.data" :key="index" class="list_item">
 					<div class="batch_selection">
 						<u-checkbox-group>
-							<u-checkbox v-if="batchOperateShow == true" @change="selectionChange(item)" activeColor="#ff565d" size="14"></u-checkbox>
+							<u-checkbox v-if="batchOperateShow == true" @change="selectionChange(item)" activeColor="#ff565d" size="14" :disabled="!item.isDelete"></u-checkbox>
 						</u-checkbox-group>
 					</div>
 					<div class="list_item_container">
