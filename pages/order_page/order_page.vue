@@ -7,14 +7,15 @@
 				:markers="markers" show-location @tap="chooseLocationInfo()"></map>
 			<!-- start -->
 			<div class="form_container">
-				<u--form labelPosition="left" :model="formData" ref="form" style="padding: 8px;">
+				<u--form labelPosition="left" :model="formData" ref="form">
 					<u-form-item label="姓名" prop="userName" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;">
 						<u-input v-model="formData.userName" border="none" placeholder="请输入姓名"></u-input>
 					</u-form-item>
 					<u-form-item label="联系电话" prop="userPhone" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;">
-						<u-input v-model="formData.userPhone" border="none" placeholder="请输入联系电话" type="number"></u-input>
+						<u-input v-model="formData.userPhone" border="none" placeholder="请输入联系电话"
+							type="number"></u-input>
 					</u-form-item>
 					<u-form-item label="年龄" prop="userAge" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;">
@@ -65,15 +66,13 @@
 			</u-action-sheet>
 			<!-- 初始时间选择 -->
 			<u-datetime-picker :show="startTimeShow" :minDate="initTime" mode="datetime" :formatter="setFormatter"
-				@confirm="handleSelectStartTime" @cancel="this.startTimeShow = false" :immediateChange="true"></u-datetime-picker>
-			<!-- 结束时间选择 -->
-			<u-datetime-picker :show="endTimeShow"
-				:minDate="endTimeDate"
-				 mode="datetime"
-				:formatter="setFormatter" @confirm="handleSelectEndTime"
-				@cancel="this.endTimeShow = false"
+				@confirm="handleSelectStartTime" @cancel="this.startTimeShow = false"
 				:immediateChange="true"></u-datetime-picker>
-				
+			<!-- 结束时间选择 -->
+			<u-datetime-picker :show="endTimeShow" :minDate="endTimeDate" mode="datetime" :formatter="setFormatter"
+				@confirm="handleSelectEndTime" @cancel="this.endTimeShow = false"
+				:immediateChange="true"></u-datetime-picker>
+
 			<!-- 加急单展示 -->
 			<u-modal :show="urgentOrderShow" title="订单提示" confirmText="确认" @confirm="this.urgentOrderShow = false">
 				<view>当前订单为{{ isUprentScope ? "加急订单" : "预约订单" }} 订单金额为{{ Number(totalPrice)/100 }}元</view>
@@ -90,8 +89,8 @@
 			</u-modal>
 			<!-- 错误提示 -->
 			<u-toast ref="uToast"></u-toast>
-			<u-button type="primary" text="提交" customStyle="margin-top: 50px"
-				@click="this.orderDetailShow = true" size="large"></u-button>
+			<u-button type="primary" text="提交" customStyle="margin-top: 50px" @click="this.orderDetailShow = true"
+				size="large"></u-button>
 		</view>
 	</view>
 </template>
@@ -129,11 +128,13 @@
 							validator: (rule, value, callback) => {
 								// 返回true表示校验通过，返回false表示不通过
 								// 过滤第一层，先判断输入为不为空，因为required: false，不是必填项，所以为空应该返回true
-								if (value) {
-									return this.$u.test.mobile(value);
-								} else {
-									return true
+								let iphoneReg = (
+									/^1[3-9]\d{9}$/
+								); //手机号码
+								if (!iphoneReg.test(value)) {
+									callback('手机号码格式不正确，请重新填写')
 								}
+								callback()
 							},
 							message: '手机号码不正确',
 							// 触发器可以同时用blur和change
@@ -236,7 +237,7 @@
 				const index = this.contactWayArray.findIndex(item => item.value === this.formData.contact)
 				return this.contactWayArray[index].name
 			},
-			endTimeDate(){
+			endTimeDate() {
 				return this.initTime
 			}
 		},
@@ -260,8 +261,7 @@
 			},
 			// 日期转时间戳
 			formatTimestampString(time) {
-				let date = new Date(time)
-				return date.getTime()
+				return new Date(time.replace(/-/g, '/')).getTime()
 			},
 			getLocationInfo() {
 				let that = this;
@@ -351,7 +351,7 @@
 				this.startTimeShow = true
 				this.hideKeyboard()
 			},
-			upgradeEndTimeMinDate(){
+			upgradeEndTimeMinDate() {
 				this.initTime = this.formatTimestampDelay(1, this.formatTimestampString(this.formData.startTime))
 			},
 			showEndTimeBoard() {
@@ -390,6 +390,12 @@
 						endTime: endTimeStamp,
 					}
 				})
+				if (status == 1) {
+					this.orderDetailShow = false
+					this.$refs.uToast.show({
+						message: message,
+					})
+				}
 				this.isUprentScope = detail.data.data.isUprentScope
 				this.totalPrice = detail.data.data.totalPrice
 				this.duration = detail.data.data.duration
@@ -456,7 +462,7 @@
 <style lang="scss">
 	.order_container {
 		.form_container {
-			padding: 8px;
+			padding: 20px;
 
 			.u-form-item__body__right__message {
 				margin-left: 0 !important;

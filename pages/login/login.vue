@@ -60,7 +60,7 @@
 			// 使用token进行登录
 			if(!token) return 
 			uni.switchTab({
-				url: '/pages/order_page/pre_order'
+				url: '/pages/pre_order/pre_order'
 			})
 		},
 		methods: {
@@ -88,7 +88,7 @@
 							uni.setStorageSync('token', msg.token)
 							console.log(uni.getStorageSync('token'))
 							uni.switchTab({
-								url: "/pages/order_page/pre_order"
+								url: "/pages/pre_order/pre_order"
 							})
 						}).catch(err => {
 							// console.log(err, 'error')

@@ -7,7 +7,7 @@
 			}
 		},
 		{
-			"path": "pages/order_page/index",
+			"path": "pages/order_page/order_page",
 			"style": {
 				"navigationBarTitleText": ""
 			}
@@ -25,15 +25,17 @@
 			}
 		},
 		{
-			"path": "pages/order_page/pre_order",
-			"style": {
-				"navigationBarTitleText": ""
+			"path" : "pages/order_list/order_list",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
 			}
 		},
 		{
-			"path": "pages/order_page/order_list",
-			"style": {
-				"navigationBarTitleText": ""
+			"path" : "pages/pre_order/pre_order",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
 			}
 		}
 	],
@@ -52,13 +54,13 @@
 		"color": "#cccccc",
 		"list": [{
 				"text": "首页",
-				"pagePath": "pages/order_page/pre_order",
+				"pagePath": "pages/pre_order/pre_order",
 				"iconPath": "/static/home.png",
 				"selectedIconPath": "/static/home_active.png"
 			},
 			{
 				"text": "订单",
-				"pagePath": "pages/order_page/order_list",
+				"pagePath": "pages/order_list/order_list",
 				"iconPath": "/static/order.png",
 				"selectedIconPath": "/static/order_active.png"
 			}

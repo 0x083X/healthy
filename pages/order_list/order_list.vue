@@ -67,7 +67,7 @@
 				currentDeleteIds: []
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.getOrderList()
 		},
 		watch: {
@@ -107,8 +107,7 @@
 					url: "api/get/order/detail",
 					method: "GET",
 					data: {
-						orderId,
-						cancel
+						orderId
 					}
 				})
 			},
