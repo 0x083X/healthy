@@ -15,7 +15,7 @@
 		methods: {
 			goToOrder() {
 				uni.navigateTo({
-					url: "/pages/order_list/order_list"
+					url: "/pages/order_page/index"
 				})
 			}
 		}

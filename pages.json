@@ -48,19 +48,19 @@
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
 	"tabBar": {
-		"selectedColor": "#b50e03",
+		"selectedColor": "#3c9cff",
 		"color": "#cccccc",
 		"list": [{
 				"text": "首页",
-				"pagePath": "pages/order_page/pre_order"
-				// "iconPath": "/assets/img/home.png",
-				// "selectedIconPath": "/assets/img/home_active.png"
+				"pagePath": "pages/order_page/pre_order",
+				"iconPath": "/static/home.png",
+				"selectedIconPath": "/static/home_active.png"
 			},
 			{
 				"text": "订单",
-				"pagePath": "pages/order_page/order_list"
-				// "iconPath": "/assets/img/order.png",
-				// "selectedIconPath": "/assets/img/order_active.png"
+				"pagePath": "pages/order_page/order_list",
+				"iconPath": "/static/order.png",
+				"selectedIconPath": "/static/order_active.png"
 			}
 		]
 	}
