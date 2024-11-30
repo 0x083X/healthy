@@ -390,7 +390,7 @@
 						endTime: endTimeStamp,
 					}
 				})
-				if (status == 1) {
+				if (detail?.status == 1) {
 					this.orderDetailShow = false
 					this.$refs.uToast.show({
 						message: message,

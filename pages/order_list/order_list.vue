@@ -1,8 +1,9 @@
 <template>
 	<view class="order_list_container">
 		<div class="order_list_header">
-			<u-search v-model="searchParams" :showAction="true" actionText="搜索" :animation="true"
-				@search="getOrderList(this.searchParams)" placeholder="搜索我的订单"></u-search>
+			<u-sticky @fixed="true"><u-search v-model="searchParams" :showAction="true" actionText="搜索" :animation="true"
+				@search="getOrderList(this.searchParams)" placeholder="搜索我的订单"></u-search></u-sticky>
+			
 		</div>
 		<div class="order_list_body" :style="{paddingBottom: batchOperateShow ? '50px' : 'initial'}">
 			<u-list scrollable>
