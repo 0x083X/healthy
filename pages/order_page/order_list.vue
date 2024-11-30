@@ -192,7 +192,9 @@
 			position: relative;
 			background-color: #f2f2f2;
 			padding-bottom: 50px;
-
+			.list_item_container{
+				width: 100%;
+			}
 			.u-list-item {
 				border-radius: 4px;
 				background-color: #fff;

@@ -59,7 +59,7 @@
 			const token = uni.setStorageSync('token')
 			// 使用token进行登录
 			if(!token) return 
-			uni.navigateTo({
+			uni.switchTab({
 				url: '/pages/order_page/pre_order'
 			})
 		},
@@ -87,7 +87,7 @@
 							// 缓存登录状态
 							uni.setStorageSync('token', msg.token)
 							console.log(uni.getStorageSync('token'))
-							uni.redirectTo({
+							uni.switchTab({
 								url: "/pages/order_page/pre_order"
 							})
 						}).catch(err => {

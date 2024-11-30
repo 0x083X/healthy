@@ -4,7 +4,7 @@
 		<view class="order_container">
 			<!-- 日期时间展示 -->
 			<map id="myMap" style="width: 100%; height: 300px;" :latitude="latitude" :longitude="longitude"
-				:markers="markers" show-location @tap="getLocationInfo()"></map>
+				:markers="markers" show-location @tap="chooseLocationInfo()"></map>
 			<!-- start -->
 			<div class="form_container">
 				<u--form labelPosition="left" :model="formData" ref="form" style="padding: 8px;">
@@ -223,7 +223,7 @@
 			}
 		},
 		onLoad() {
-			this.initTime = this.formatTimestampDelay(2)
+			this.initTime = this.formatTimestampDelay(3)
 			this.getLocationInfo()
 		},
 		onReady() {
@@ -251,8 +251,6 @@
 				var date = new Date();
 				// 初始化时间
 				var date1 = new Date().getTime(); // 获取当前时间戳
-				console.log('推迟两小时',date.setTime((startTime ? startTime : date1) + (delayTime ? 3600000 * 2 : 3600000)));
-				console.log('当前时间',date1);
 				return date.setTime((startTime ? startTime : date1) + (delayTime ? 3600000 * delayTime : 3600000));
 			},
 			// 日期转时间戳
@@ -343,7 +341,7 @@
 				uni.hideKeyboard()
 			},
 			showStartTimeBoard() {
-				this.initTime = this.formatTimestampDelay(2)
+				this.initTime = this.formatTimestampDelay(3)
 				this.formData.endTime = ''
 				this.startTimeShow = true
 				this.hideKeyboard()
