@@ -65,13 +65,14 @@
 			</u-action-sheet>
 			<!-- 初始时间选择 -->
 			<u-datetime-picker :show="startTimeShow" :minDate="initTime" mode="datetime" :formatter="setFormatter"
-				@confirm="handleSelectStartTime" @cancel="this.startTimeShow = false"></u-datetime-picker>
+				@confirm="handleSelectStartTime" @cancel="this.startTimeShow = false" :immediateChange="true"></u-datetime-picker>
 			<!-- 结束时间选择 -->
 			<u-datetime-picker :show="endTimeShow"
-				:minDate="formatTimestampDelay(1,formatTimestampString(formData.startTime))"
+				:minDate="endTimeDate"
 				 mode="datetime"
 				:formatter="setFormatter" @confirm="handleSelectEndTime"
-				@cancel="this.endTimeShow = false"></u-datetime-picker>
+				@cancel="this.endTimeShow = false"
+				:immediateChange="true"></u-datetime-picker>
 				
 			<!-- 加急单展示 -->
 			<u-modal :show="urgentOrderShow" title="订单提示" confirmText="确认" @confirm="this.urgentOrderShow = false">
@@ -204,6 +205,7 @@
 				endTimeShow: false,
 				// 当前时间值初始化
 				initTime: 0,
+				endTimeInit: 0,
 				// 订单是否加急
 				isUprentScope: false,
 				// 当前订单金额
@@ -234,6 +236,9 @@
 				const index = this.contactWayArray.findIndex(item => item.value === this.formData.contact)
 				return this.contactWayArray[index].name
 			},
+			endTimeDate(){
+				return this.initTime
+			}
 		},
 		methods: {
 			// 手机号正则   1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}
@@ -346,6 +351,9 @@
 				this.startTimeShow = true
 				this.hideKeyboard()
 			},
+			upgradeEndTimeMinDate(){
+				this.initTime = this.formatTimestampDelay(1, this.formatTimestampString(this.formData.startTime))
+			},
 			showEndTimeBoard() {
 				if (!this.formData.startTime) {
 					this.$refs.uToast.show({
@@ -353,13 +361,13 @@
 					})
 					return
 				}
-				this.initTime = this.formatTimestampDelay()
 				this.endTimeShow = true
 				this.hideKeyboard()
 			},
 			handleSelectStartTime(time) {
 				this.formData.startTime = this.formatTimestamp(time.value)
 				this.startTimeShow = false
+				this.upgradeEndTimeMinDate()
 			},
 			handleSelectEndTime(time) {
 				this.formData.endTime = this.formatTimestamp(time.value)
