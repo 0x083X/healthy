@@ -18,7 +18,7 @@
 					</u-form-item>
 					<u-form-item label="年龄" prop="userAge" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;">
-						<u-input v-model="formData.userAge" border="none" placeholder="请输入年龄"></u-input>
+						<u-input v-model="formData.userAge" border="none" placeholder="请输入年龄" type="number"></u-input>
 					</u-form-item>
 					<u-form-item label="请选择预约开始时间" prop="startTime" borderBottom label-position="top" label-width="100%"
 						style="margin-top: 8px;" @click="showStartTimeBoard()">
@@ -68,9 +68,11 @@
 				@confirm="handleSelectStartTime" @cancel="this.startTimeShow = false"></u-datetime-picker>
 			<!-- 结束时间选择 -->
 			<u-datetime-picker :show="endTimeShow"
-				:minDate="formatTimestampDelay(1,formatTimestampString(formData.startTime))" mode="datetime"
+				:minDate="formatTimestampDelay(1,formatTimestampString(formData.startTime))"
+				 mode="datetime"
 				:formatter="setFormatter" @confirm="handleSelectEndTime"
 				@cancel="this.endTimeShow = false"></u-datetime-picker>
+				
 			<!-- 加急单展示 -->
 			<u-modal :show="urgentOrderShow" title="订单提示" confirmText="确认" @confirm="this.urgentOrderShow = false">
 				<view>当前订单为{{ isUprentScope ? "加急订单" : "预约订单" }} 订单金额为{{ Number(totalPrice)/100 }}元</view>
@@ -221,7 +223,7 @@
 			}
 		},
 		onLoad() {
-			this.initTime = this.formatTimestampDelay()
+			this.initTime = this.formatTimestampDelay(2)
 			this.getLocationInfo()
 		},
 		onReady() {
@@ -249,7 +251,9 @@
 				var date = new Date();
 				// 初始化时间
 				var date1 = new Date().getTime(); // 获取当前时间戳
-				return date.setTime((startTime ? startTime : date1) + (delayTime ? 3600000 * Number(delayTime) : 3600000));
+				console.log('推迟两小时',date.setTime((startTime ? startTime : date1) + (delayTime ? 3600000 * 2 : 3600000)));
+				console.log('当前时间',date1);
+				return date.setTime((startTime ? startTime : date1) + (delayTime ? 3600000 * delayTime : 3600000));
 			},
 			// 日期转时间戳
 			formatTimestampString(time) {
@@ -339,7 +343,8 @@
 				uni.hideKeyboard()
 			},
 			showStartTimeBoard() {
-				this.initTime = this.formatTimestampDelay()
+				this.initTime = this.formatTimestampDelay(2)
+				this.formData.endTime = ''
 				this.startTimeShow = true
 				this.hideKeyboard()
 			},
