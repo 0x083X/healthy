@@ -40,10 +40,12 @@
 			<view class="detail-footer-btns">
 				<u-button type="success" :loading="loading" :customStyle="btnGetCode" @click="pay" v-if="payOrderBtnShow" size="mini" >去支付</u-button>
 				<u-button type="warning" :loading="loading" :customStyle="btnGetCode" @click="payAgain" v-if="buyAgainOrderBtnShow" size="mini" >再次购买</u-button>
-				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="deleteOrder(detail.orderId)" v-if="deleteOrderBtnShow" size="mini" >删除订单</u-button>
+				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="openSingleModel(detail.orderId)" v-if="deleteOrderBtnShow" size="mini" >删除订单</u-button>
 				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="cancelOrderFn" v-else size="mini" >取消订单</u-button>
 			</view>
 		</view>
+		<u-modal :show="deleteOrderTipsShow" title="提示" content='确认删除该订单吗' :showCancelButton="true"
+			@confirm="confirmDeleteOrder()" @cancel="cancelDeleteOrder"></u-modal>
 	</view>
 </template>
 
@@ -92,6 +94,8 @@
 				timer: null, // 时钟
 				time: 0, // 过期时间
 				orderId: 0,
+				deleteOrderTipsShow: false,
+				currentDeleteIds: [],
 			}
 		},
 		onLoad(options) {
@@ -100,6 +104,18 @@
 			this.getOrderDetail(options.orderId)
 		},
 		methods: {
+			openSingleModel(item) {
+				this.deleteOrderTipsShow = true;
+				this.currentDeleteIds = [];
+				this.currentDeleteIds.push(item)
+			},
+			confirmDeleteOrder() {
+				this.deleteOrderTipsShow = false
+				this.deleteOrder(this.currentDeleteIds)
+			},
+			cancelDeleteOrder(item) {
+				this.deleteOrderTipsShow = false
+			},
 			cancelOrderFn: debounce(function() {
 				console.log(this)
 				this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`)

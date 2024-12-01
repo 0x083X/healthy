@@ -7,8 +7,8 @@
 
 		</div>
 		<div class="order_list_body" :style="{paddingBottom: batchOperateShow ? '50px' : 'initial'}">
-			<u-list scrollable>
-				<u-list-item v-for="(item, index) in listData.data" :key="index" class="list_item">
+			<u-list scrollable @scrolltolower="scrollToBottom">
+				<u-list-item v-for="(item, index) in listData" :key="index" class="list_item">
 					<div class="batch_selection">
 						<u-checkbox-group>
 							<u-checkbox v-if="batchOperateShow == true" @change="selectionChange(item)"
@@ -34,15 +34,13 @@
 						</div>
 						<div class="list_item_footer">
 							<div class="list_item_footer_left">
-								<u-button type="error" :plain="true" shape="circle" size="mini" v-if="item.isDelete"
+								<u-button type="error" shape="circle" v-if="item.isDelete"
 									@click="openSingleModel(item.orderId)">删除订单</u-button>
-								<u-button type="error" :plain="true" shape="circle" size="mini" v-else
-									@click="cancelOrder(item)">取消订单</u-button>
+								<u-button type="error" shape="circle" v-else @click="cancelOrder(item)">取消订单</u-button>
 
 							</div>
 							<div class="list_item_footer_right">
-								<u-button type="warning" :plain="true" shape="circle" size="mini"
-									@click="getOrderDetail(item)">详情</u-button>
+								<u-button type="primary" shape="circle" @click="getOrderDetail(item)">详情</u-button>
 							</div>
 						</div>
 					</div>
@@ -51,11 +49,12 @@
 					<u-button type="error" :plain="true" shape="circle" size="mini"
 						@click="this.batchDeleteOrderTipsShow = true">批量删除</u-button>
 				</view>
+				<u-loadmore :status="status" />
 			</u-list>
+			<!-- <u-empty v-if="listData.length" mode="list"></u-empty> -->
 		</div>
-		<u-empty v-if="listData.length" mode="list"></u-empty>
-		<view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
-			{{this.batchOperateAreaText()}}</view>
+		<!-- <view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
+			{{this.batchOperateAreaText()}}</view> -->
 		<u-toast ref="uToast"></u-toast>
 		<u-modal :show="deleteOrderTipsShow" title="提示" content='确认删除该订单吗' :showCancelButton="true"
 			@confirm="confirmDeleteOrder()" @cancel="cancelDeleteOrder"></u-modal>
@@ -77,6 +76,10 @@
 				currentDeleteIds: [],
 				deleteOrderTipsShow: false,
 				batchDeleteOrderTipsShow: false,
+				page: 1,
+				pageSize: 10,
+				status: "loadmore",
+				total: 0
 			}
 		},
 		onShow() {
@@ -90,6 +93,32 @@
 			}
 		},
 		methods: {
+			// throttle(fn, wait) {
+			// 	let lastTime = 0;
+			// 	// 上次执行时间 
+			// 	return function(...args) {
+			// 		const now = new Date().getTime();
+			// 		// 当前时间 
+			// 		if (now - lastTime >= wait) {
+			// 			fn.apply(this, args);
+			// 			// 执行函数 
+			// 			lastTime = now;
+			// 			// 更新上次执行时间 
+			// 		}
+			// 	};
+			// },
+			scrollToBottom() {
+				console.log('this.total', this.total);
+				console.log('this.listData', this.listData);
+				setTimeout(() => {
+					if (this.total < this.listData.length) {
+						return
+					}
+					this.status = 'loading'
+					this.page += 1
+					this.getOrderList()
+				}, 1000)
+			},
 			openSingleModel(item) {
 				this.deleteOrderTipsShow = true;
 				this.currentDeleteIds = [];
@@ -97,7 +126,6 @@
 			},
 			confirmDeleteOrder() {
 				this.deleteOrderTipsShow = false
-				console.log('this.currentDeleteIds',this.currentDeleteIds);
 				this.deleteOrder(this.currentDeleteIds)
 			},
 			cancelDeleteOrder(item) {
@@ -112,7 +140,7 @@
 					method: "GET",
 					data: {
 						pageSize: 10,
-						pageNumber: 1,
+						pageNo: this.page,
 						keyword: params ? params : ''
 					}
 				})
@@ -122,7 +150,16 @@
 					})
 					return
 				}
-				this.listData = res.data
+				if (this.page == 1) {
+					this.listData = res.data.data
+					this.total = res.data.total
+				} else {
+					console.log('data', this.listData);
+					this.listData = this.listData.concat(res.data.data)
+					this.status = 'nomore'
+				}
+				console.log('this.listData', this.listData);
+
 			},
 			async getOrderDetail(item) {
 				const {
@@ -220,7 +257,7 @@
 		.order_list_body {
 			position: relative;
 			background-color: #f2f2f2;
-			padding-bottom: 50px;
+			margin-bottom: 50px;
 
 			.list_item_container {
 				width: 100%;
@@ -265,6 +302,7 @@
 					}
 
 					.list_item_detail {
+						width: 100%;
 						display: flex;
 
 						.list_item_detail_time {
@@ -320,8 +358,8 @@
 			}
 		}
 
-		.u-empty {
-			margin-top: 50px !important;
-		}
+		// .u-empty {
+		// 	margin-top: 50px !important;
+		// }
 	}
 </style>
