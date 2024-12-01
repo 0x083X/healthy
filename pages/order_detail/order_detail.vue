@@ -106,6 +106,7 @@
 		methods: {
 			openSingleModel(item) {
 				this.deleteOrderTipsShow = true;
+				console.log(this.deleteOrderTipsShow)
 				this.currentDeleteIds = [];
 				this.currentDeleteIds.push(item)
 			},
@@ -207,7 +208,12 @@
 	}
 	
 </script>
-
+<style>
+		
+	.u-popup {
+		flex: none !important;
+	}
+</style>
 <style lang="scss" scoped>
 		
 	.detail {
