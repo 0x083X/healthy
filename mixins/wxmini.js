@@ -15,6 +15,7 @@ export default {
 		},
 		wxPay(params) {
 			const { timeStamp, nonceStr, orderID, signType, paySign, pay_id } = params
+			console.log(timeStamp, nonceStr, orderID, signType, paySign, pay_id)
 			uni.requestPayment({ 
 				provider: 'wxpay', // 服务提提供商
 				timeStamp: String(timeStamp), // 时间戳

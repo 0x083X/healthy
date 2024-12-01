@@ -2,11 +2,20 @@
 	<view class="detail">
 		<view class="detail-container">
 			<view class="detail-container-header">
-				<view class="detail-container-header-tip">
-					订单信息
+				<view class="detail-container-header-main">
+					<view class="detail-container-header-main-tip">
+						订单信息
+					</view>
+					<u-tag class="detail-container-header-main-status" :type="orderStatusMap[detail.orderStatus].type" :text="orderStatusMap[detail.orderStatus].tip" size="mini">
+					</u-tag>
 				</view>
-				<u-tag class="detail-container-header-status" :type="orderStatusMap[detail.orderStatus].type" :text="orderStatusMap[detail.orderStatus].tip" size="mini">
-				</u-tag>
+				<view class="detail-container-header-sub" v-if="detail.orderStatus === 0">
+					<u--text text="订单剩余时间" class="detail-container-header-sub-tip" type="warning" size=12>
+					</u--text>
+					<view class="detail-container-header-sub-time">
+						<u-count-down :time="detail.expiredTime - new Date().getTime()" format="mm:ss"></u-count-down>
+					</view>
+				</view>
 			</view>
 			<view class="detail-container-message">
 				<view class="detail-container-message-box" v-for="item in showDetail" :key="item.key">
@@ -42,7 +51,7 @@
 	import wxmini from '../../mixins/wxmini'
 	import  { detailShowMap, detailValueMap, orderStatusMap, detailMap, transValue } from '../../utils/detailFilter.js'
 	export default {
-			
+		mixins: [ wxmini ],
 		computed: {
 				
 			orderPrice() {
@@ -78,6 +87,8 @@
 					marginRight: '5px'
 				},
 				orderStatusMap, // 订单状态
+				timer: null, // 时钟
+				time: 0, // 过期时间
 			}
 		},
 		onLoad(options) {
@@ -85,15 +96,32 @@
 			this.getOrderDetail(options.orderId)
 		},
 		methods: {
-				
 			pay() {
-				const params = {
-					// timeStamp: '', nonceStr, orderID, signType, paySign, pay_id
-				}
+				this.$request({
+					url: "api/keep/pay/order",
+					method: 'POST',
+					data: {
+						orderId: this.detail.id,
+						pay_id: this.detail.pay_id
+					}
+				}).then(res => {
+					if (res.data.status === 1) {
+						uni.showToast({
+							title: res.data.message,
+							icon: 'none'
+						})
+						return
+					}
+					const msg = res.data
+					msg.data.orderID = msg.data.package
+					this.wxPay(msg.data)
+				}).catch(err => {
+					console.log(err)
+				})
 			},
 				
 			filterOrderDetail() {
-				console.log(this.detail)
+				console.log(this.detail, 'detail')
 				const showDetailArr = detailShowMap[this.detail.orderStatus]
 				console.log(showDetailArr)
 				const array = Object.entries(this.detail).filter(item => {
@@ -166,16 +194,28 @@
 				
 			&-header {
 				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding-bottom: 10px;
-				border-bottom: 1px solid #eee;
-				// line-height: 30px;
-				height: 30px;
-					
-				&-tip {
-					font-weight: bold;
-					font-size: 16px;
+				flex-direction: column;
+				&-main {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					padding-bottom: 8px;
+					border-bottom: 1px solid #eee;
+					// line-height: 30px;
+					height: 30px;
+					&-tip {
+						font-weight: bold;
+						font-size: 16px;
+					}
+				}
+				&-sub {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					padding: 8px 0;
+					border-bottom: 1px solid #eee;
+					// line-height: 30px;
+					height: 30px;
 				}
 			}
 				
