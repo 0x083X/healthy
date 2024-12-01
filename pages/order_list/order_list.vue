@@ -2,8 +2,8 @@
 	<view class="order_list_container">
 		<div class="order_list_header">
 			<u-sticky @fixed="true"><u-search v-model="searchParams" :showAction="true" actionText="搜索"
-					:animation="true" @search="getOrderList(this.searchParams)"
-					placeholder="搜索我的订单"></u-search></u-sticky>
+					:animation="true" @custom="getOrderList(searchParams)" placeholder="搜索我的订单"></u-search>
+			</u-sticky>
 
 		</div>
 		<div class="order_list_body" :style="{paddingBottom: batchOperateShow ? '50px' : 'initial'}">
@@ -36,11 +36,13 @@
 							<div class="list_item_footer_left">
 								<u-button type="error" shape="circle" v-if="item.isDelete" size="mini"
 									@click="openSingleModel(item.orderId)">删除订单</u-button>
-								<u-button type="error" shape="circle" v-else ize="mini" @click="cancelOrder(item)">取消订单</u-button>
+								<u-button type="error" shape="circle" v-else ize="mini" @click="cancelOrder(item)"
+									size="mini">取消订单</u-button>
 
 							</div>
 							<div class="list_item_footer_right">
-								<u-button type="primary" shape="circle" @click="getOrderDetail(item)" size="mini">详情</u-button>
+								<u-button type="primary" shape="circle" @click="getOrderDetail(item)"
+									size="mini">详情</u-button>
 							</div>
 						</div>
 					</div>
@@ -53,7 +55,7 @@
 			</u-list>
 			<!-- <u-empty v-if="listData.length" mode="list"></u-empty> -->
 		</div>
-<!-- 		<view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
+		<!-- 		<view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
 			{{this.batchOperateAreaText()}}</view>
 		<u-toast ref="uToast"></u-toast> -->
 		<u-modal :show="deleteOrderTipsShow" title="提示" content='确认删除该订单吗' :showCancelButton="true"
