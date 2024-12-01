@@ -1,6 +1,7 @@
 export default {
 	methods: {
 		async deleteOrder(item) {
+			this.loading = true
 			const orderIds = item instanceof Array ? item : [item]
 			const res = await this.$request({
 				url: "api/batch/delete/order",
@@ -19,9 +20,11 @@ export default {
 			uni.reLaunch({
 				url: '/pages/order_list/order_list'
 			})
+			this.loading = false
 			// this.getOrderList()
 		},
 		async cancelOrder(item, url = '/pages/order_list/order_list') {
+			this.loading = true
 			const {
 				orderId,
 				pay_id
@@ -41,6 +44,7 @@ export default {
 				})
 				return
 			}
+			this.loading = false
 			uni.reLaunch({
 				url
 			})

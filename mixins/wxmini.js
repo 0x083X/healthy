@@ -14,6 +14,7 @@ export default {
 			return signType(params).toUpperCase()
 		},
 		wxPay(params) {
+			this.loading = true
 			const { timeStamp, nonceStr, orderID, signType, paySign, pay_id } = params
 			console.log(timeStamp, nonceStr, orderID, signType, paySign, pay_id)
 			uni.requestPayment({ 
@@ -38,7 +39,13 @@ export default {
 					// 业务逻辑。。。
 				},
 				fail: function (err) {
-					console.log(err)
+					uni.showToast({
+						title: '支付失败',
+						icon: 'none'
+					})
+				},
+				complete: () => {
+					this.loading = false
 				}
 			});		
 		},

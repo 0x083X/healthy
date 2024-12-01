@@ -103,6 +103,7 @@
 				this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`)
 			},
 			pay() {
+				console.log(this.loading, 'loading')
 				this.$request({
 					url: "api/keep/pay/order",
 					method: 'POST',
@@ -123,6 +124,8 @@
 					this.wxPay(msg.data)
 				}).catch(err => {
 					console.log(err)
+				}).finally(() => {
+					console.log(this.loading, 'loading')
 				})
 			},
 			// 再次购买
@@ -192,7 +195,7 @@
 	.detail {
 		display: flex;
 		flex-direction: column;
-		// height: 100%;
+		height: 100%;
 		background-color: #eee;
 		&-container {
 			flex: 1;
@@ -202,7 +205,8 @@
 			padding: 20px;
 			border-radius: 20px;
 			background-color: #fff;
-				
+			overflow: auto;
+			
 			&-header {
 				display: flex;
 				flex-direction: column;
