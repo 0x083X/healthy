@@ -45,9 +45,16 @@ export default {
 				return
 			}
 			this.loading = false
-			uni.reLaunch({
-				url
-			})
+				
+			if (url === '/pages/order_list/order_list') {
+				uni.reLaunch({
+					url
+				})
+			} else {
+				uni.redirectTo({
+					url
+				})
+			}
 			// this.getOrderList()
 		},
 	},
