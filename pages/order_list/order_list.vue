@@ -111,7 +111,7 @@
 						orderId
 					}
 				})
-				uni.redirectTo({
+				uni.navigateTo({
 					url: `/pages/order_detail/order_detail?orderId=${orderId}`
 				})
 			},

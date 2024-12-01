@@ -17,7 +17,7 @@
 		methods: {
 			jumpToForm() {
 				uni.reLaunch({
-					url: '/pages/order_page/index'
+					url: '/pages/order_list/order_list'
 				})
 			}
 		}

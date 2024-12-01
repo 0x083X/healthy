@@ -61,7 +61,7 @@ export const detailValueMap = {
 	userName: '用户名',
 	userPhone: '用户电话号码',
 	userAge: '用户年龄',
-	requireGender: '性别',
+	requireGender: '陪诊人性别',
 	risk_content: '特殊情况说明',
 	expiredTime: '订单过期时间戳',
 	userDescription: '需求说明',
