@@ -23,9 +23,11 @@
 	import wxmini from '../../mixins/wxmini'
 	export default {
 		onLoad(option) {
-			this.getOpenerEventChannel().on('toOpenedPage', data =>{
-				this.payOrderDetail = data
-			})
+			const data = JSON.parse(decodeURIComponent(option.data))
+			this.payOrderDetail = data
+			// this.getOpenerEventChannel().on('toOpenedPage', data =>{
+			// 	this.payOrderDetail = data
+			// })
 		},
 		components: {
 			PayType,

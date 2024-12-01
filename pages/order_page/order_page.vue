@@ -445,13 +445,12 @@
 				if (data) {
 					data.orderID = data.package
 					data.totalPrice = this.totalPrice
-					this.message = data
 					uni.redirectTo({
-						url: '/pages/pay_page/pay_page',
-						success: d => {
-							// 当前页面的数据→传→被打开页面
-							d.eventChannel.emit('toOpenedPage', this.message);
-						}
+						url: `/pages/pay_page/pay_page?data=${encodeURIComponent(JSON.stringify(data))}`
+						// success: d => {
+						// 	// 当前页面的数据→传→被打开页面
+						// 	d.eventChannel.emit('toOpenedPage', this.message);
+						// }
 					})
 				}
 			},

@@ -51,6 +51,7 @@
 	import wxmini from '../../mixins/wxmini'
 	import order from '../../mixins/order'
 	import  { detailShowMap, detailValueMap, orderStatusMap, detailMap, transValue } from '../../utils/detailFilter.js'
+	import { debounce } from 'lodash'
 	export default {
 		mixins: [ wxmini, order ],
 		computed: {
@@ -100,7 +101,7 @@
 		},
 		methods: {
 			cancelOrderFn() {
-				this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`)
+				debounce(this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`), 300)
 			},
 			pay() {
 				console.log(this.loading, 'loading')
