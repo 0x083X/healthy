@@ -100,9 +100,10 @@
 			this.getOrderDetail(options.orderId)
 		},
 		methods: {
-			cancelOrderFn() {
-				debounce(this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`), 300)
-			},
+			cancelOrderFn: debounce(function() {
+				console.log(this)
+				this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`)
+			}, 300),
 			pay() {
 				console.log(this.loading, 'loading')
 				this.$request({
