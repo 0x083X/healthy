@@ -13,7 +13,7 @@
 					<u--text text="订单剩余时间" class="detail-container-header-sub-tip" type="warning" size=12>
 					</u--text>
 					<view class="detail-container-header-sub-time">
-						<u-count-down :time="detail.expiredTime - new Date().getTime()" format="mm:ss"></u-count-down>
+						<u-count-down :time="detail.expiredTime - new Date().getTime()" format="mm:ss" @finish="cancelOrderFn"></u-count-down>
 					</view>
 				</view>
 			</view>
@@ -39,9 +39,9 @@
 			</view>
 			<view class="detail-footer-btns">
 				<u-button type="success" :loading="loading" :customStyle="btnGetCode" @click="pay" v-if="payOrderBtnShow" size="mini" >去支付</u-button>
-				<u-button type="warning" :loading="loading" :customStyle="btnGetCode" @click="pay" v-if="buyAgainOrderBtnShow" size="mini" >再次购买</u-button>
-				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="pay" v-if="deleteOrderBtnShow" size="mini" >删除订单</u-button>
-				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="pay" v-else size="mini" >取消订单</u-button>
+				<u-button type="warning" :loading="loading" :customStyle="btnGetCode" @click="payAgain" v-if="buyAgainOrderBtnShow" size="mini" >再次购买</u-button>
+				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="deleteOrder(detail.orderId)" v-if="deleteOrderBtnShow" size="mini" >删除订单</u-button>
+				<u-button type="error" :loading="loading" :customStyle="btnGetCode" @click="cancelOrderFn" v-else size="mini" >取消订单</u-button>
 			</view>
 		</view>
 	</view>
@@ -49,9 +49,10 @@
 
 <script>
 	import wxmini from '../../mixins/wxmini'
+	import order from '../../mixins/order'
 	import  { detailShowMap, detailValueMap, orderStatusMap, detailMap, transValue } from '../../utils/detailFilter.js'
 	export default {
-		mixins: [ wxmini ],
+		mixins: [ wxmini, order ],
 		computed: {
 				
 			orderPrice() {
@@ -89,13 +90,18 @@
 				orderStatusMap, // 订单状态
 				timer: null, // 时钟
 				time: 0, // 过期时间
+				orderId: 0,
 			}
 		},
 		onLoad(options) {
 			console.log(options.orderId, '12')
+			this.orderId = options.orderId
 			this.getOrderDetail(options.orderId)
 		},
 		methods: {
+			cancelOrderFn() {
+				this.cancelOrder({orderId: this.detail.orderId, pay_id: this.detail.pay_id}, `/pages/order_detail/order_detail?orderId=${this.orderId}`)
+			},
 			pay() {
 				this.$request({
 					url: "api/keep/pay/order",
@@ -119,7 +125,12 @@
 					console.log(err)
 				})
 			},
-				
+			// 再次购买
+			payAgain() {
+				uni.redirectTo({
+					url: '/pages/order_page/order_page'
+				})
+			},
 			filterOrderDetail() {
 				console.log(this.detail, 'detail')
 				const showDetailArr = detailShowMap[this.detail.orderStatus]

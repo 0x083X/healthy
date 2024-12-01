@@ -135,7 +135,7 @@
 					return
 				}
 				uni.reLaunch({
-					url: '/pages/order_page/order_list'
+					url: '/pages/order_list/order_list'
 				})
 				this.getOrderList()
 			},
@@ -155,9 +155,9 @@
 					return
 				}
 				uni.reLaunch({
-					url: '/pages/order_page/order_list'
+					url: '/pages/order_list/order_list'
 				})
-				this.getOrderList()
+				// this.getOrderList()
 			},
 			selectionChange(item){
 				if(item.isDelete){

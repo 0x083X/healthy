@@ -12,9 +12,20 @@ export async function request(options) {
 				authorization: uni.getStorageSync("token") || ''
 			}
 		}).then(res => {
+				
+			if (res.data.code === 401) {
+				uni.showToast({
+					title: '请先登录',
+					icon: 'none'
+				})
+				uni.reLaunch({
+					url: '/pages/login/login'
+				})
+				return
+			}
 			resolve(res)
 		}).catch(err => {
-			reject(err)
+			console.log(err, 'err')
 		})
 	})
 }
