@@ -111,6 +111,9 @@
 						orderId
 					}
 				})
+				uni.redirectTo({
+					url: `/pages/order_detail/order_detail?orderId=${orderId}`
+				})
 			},
 			async cancelOrder(item) {
 				const {
