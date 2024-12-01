@@ -34,13 +34,13 @@
 						</div>
 						<div class="list_item_footer">
 							<div class="list_item_footer_left">
-								<u-button type="error" shape="circle" v-if="item.isDelete"
+								<u-button type="error" shape="circle" v-if="item.isDelete" size="mini"
 									@click="openSingleModel(item.orderId)">删除订单</u-button>
-								<u-button type="error" shape="circle" v-else @click="cancelOrder(item)">取消订单</u-button>
+								<u-button type="error" shape="circle" v-else ize="mini" @click="cancelOrder(item)">取消订单</u-button>
 
 							</div>
 							<div class="list_item_footer_right">
-								<u-button type="primary" shape="circle" @click="getOrderDetail(item)">详情</u-button>
+								<u-button type="primary" shape="circle" @click="getOrderDetail(item)" size="mini">详情</u-button>
 							</div>
 						</div>
 					</div>
@@ -53,13 +53,13 @@
 			</u-list>
 			<!-- <u-empty v-if="listData.length" mode="list"></u-empty> -->
 		</div>
-		<!-- <view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
-			{{this.batchOperateAreaText()}}</view> -->
-		<u-toast ref="uToast"></u-toast>
+<!-- 		<view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
+			{{this.batchOperateAreaText()}}</view>
+		<u-toast ref="uToast"></u-toast> -->
 		<u-modal :show="deleteOrderTipsShow" title="提示" content='确认删除该订单吗' :showCancelButton="true"
-			@confirm="confirmDeleteOrder()" @cancel="cancelDeleteOrder"></u-modal>
+			@confirm="confirmDeleteOrder()" @cancel="cancelDeleteOrder()"></u-modal>
 		<u-modal :show="batchDeleteOrderTipsShow" title="提示" content='确认批量删除订单吗' :showCancelButton="true"
-			@confirm="confirmDeleteOrder()" @cancel="cancelBatchDeleteOrder"></u-modal>
+			@confirm="confirmDeleteOrder()" @cancel="cancelDeleteOrder()"></u-modal>
 	</view>
 </template>
 
@@ -78,7 +78,7 @@
 				batchDeleteOrderTipsShow: false,
 				page: 1,
 				pageSize: 10,
-				status: "loadmore",
+				status: "nomore",
 				total: 0
 			}
 		},
@@ -304,13 +304,14 @@
 					.list_item_detail {
 						width: 100%;
 						display: flex;
+						justify-content: space-between;
 
 						.list_item_detail_time {
 							font-size: 10px;
 						}
 
 						.list_item_detail_price {
-							font-size: 12px;
+							font-size: 14px;
 							font-weight: 500;
 						}
 					}
