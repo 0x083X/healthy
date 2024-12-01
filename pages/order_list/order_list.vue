@@ -1,16 +1,18 @@
 <template>
 	<view class="order_list_container">
 		<div class="order_list_header">
-			<u-sticky @fixed="true"><u-search v-model="searchParams" :showAction="true" actionText="搜索" :animation="true"
-				@search="getOrderList(this.searchParams)" placeholder="搜索我的订单"></u-search></u-sticky>
-			
+			<u-sticky @fixed="true"><u-search v-model="searchParams" :showAction="true" actionText="搜索"
+					:animation="true" @search="getOrderList(this.searchParams)"
+					placeholder="搜索我的订单"></u-search></u-sticky>
+
 		</div>
 		<div class="order_list_body" :style="{paddingBottom: batchOperateShow ? '50px' : 'initial'}">
 			<u-list scrollable>
 				<u-list-item v-for="(item, index) in listData.data" :key="index" class="list_item">
 					<div class="batch_selection">
 						<u-checkbox-group>
-							<u-checkbox v-if="batchOperateShow == true" @change="selectionChange(item)" activeColor="#ff565d" size="14" :disabled="!item.isDelete"></u-checkbox>
+							<u-checkbox v-if="batchOperateShow == true" @change="selectionChange(item)"
+								activeColor="#ff565d" size="14" :disabled="!item.isDelete"></u-checkbox>
 						</u-checkbox-group>
 					</div>
 					<div class="list_item_container">
@@ -25,17 +27,18 @@
 						</div>
 						<div class="list_item_body">
 							<div class="list_item_detail">
-								<div class="list_item_detail_time">下单时间：{{item.startTimeText}}-{{item.endTimeText}}</div>
+								<div class="list_item_detail_time">下单时间：{{item.startTimeText}}-{{item.endTimeText}}
+								</div>
 								<div class="list_item_detail_price">￥{{item.price}}</div>
 							</div>
 						</div>
 						<div class="list_item_footer">
 							<div class="list_item_footer_left">
 								<u-button type="error" :plain="true" shape="circle" size="mini" v-if="item.isDelete"
-									@click="deleteOrder(item.orderId)">删除订单</u-button>
+									@click="openSingleModel(item.orderId)">删除订单</u-button>
 								<u-button type="error" :plain="true" shape="circle" size="mini" v-else
 									@click="cancelOrder(item)">取消订单</u-button>
-						
+
 							</div>
 							<div class="list_item_footer_right">
 								<u-button type="warning" :plain="true" shape="circle" size="mini"
@@ -45,13 +48,19 @@
 					</div>
 				</u-list-item>
 				<view class="batch_operate_area" v-if="batchOperateShow == true">
-					<u-button type="error" :plain="true" shape="circle" size="mini" @click="deleteOrder(currentDeleteIds)">批量删除</u-button>
+					<u-button type="error" :plain="true" shape="circle" size="mini"
+						@click="this.batchDeleteOrderTipsShow = true">批量删除</u-button>
 				</view>
 			</u-list>
 		</div>
 		<u-empty v-if="listData.length" mode="list"></u-empty>
-		<view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">{{this.batchOperateAreaText()}}</view>
+		<view class="batch_operate_button" @click="this.batchOperateShow = !this.batchOperateShow">
+			{{this.batchOperateAreaText()}}</view>
 		<u-toast ref="uToast"></u-toast>
+		<u-modal :show="deleteOrderTipsShow" title="提示" content='确认删除该订单吗' :showCancelButton="true"
+			@confirm="confirmDeleteOrder()" @cancel="cancelDeleteOrder"></u-modal>
+		<u-modal :show="batchDeleteOrderTipsShow" title="提示" content='确认批量删除订单吗' :showCancelButton="true"
+			@confirm="confirmDeleteOrder()" @cancel="cancelBatchDeleteOrder"></u-modal>
 	</view>
 </template>
 
@@ -65,7 +74,9 @@
 				searchParams: "",
 				listData: [],
 				batchOperateShow: false,
-				currentDeleteIds: []
+				currentDeleteIds: [],
+				deleteOrderTipsShow: false,
+				batchDeleteOrderTipsShow: false,
 			}
 		},
 		onShow() {
@@ -73,13 +84,26 @@
 		},
 		watch: {
 			batchOperateShow: {
-				handler(val,oldVal){
+				handler(val, oldVal) {
 					this.batchOperateShow = val
 				}
 			}
 		},
 		methods: {
-			batchOperateAreaText(){
+			openSingleModel(item) {
+				this.deleteOrderTipsShow = true;
+				this.currentDeleteIds = [];
+				this.currentDeleteIds.push(item)
+			},
+			confirmDeleteOrder() {
+				this.deleteOrderTipsShow = false
+				console.log('this.currentDeleteIds',this.currentDeleteIds);
+				this.deleteOrder(this.currentDeleteIds)
+			},
+			cancelDeleteOrder(item) {
+				this.deleteOrderTipsShow = false
+			},
+			batchOperateAreaText() {
 				return this.batchOperateShow ? '完成' : '管理'
 			},
 			async getOrderList(params) {
@@ -159,8 +183,8 @@
 				})
 				// this.getOrderList()
 			},
-			selectionChange(item){
-				if(item.isDelete){
+			selectionChange(item) {
+				if (item.isDelete) {
 					this.currentDeleteIds.push(item.orderId)
 				}
 			}
@@ -170,6 +194,8 @@
 
 <style lang="scss">
 	.order_list_container {
+		height: calc(100vh - 44px) !important;
+
 		.order_list_header {
 			display: flex;
 			align-items: center;
@@ -195,9 +221,11 @@
 			position: relative;
 			background-color: #f2f2f2;
 			padding-bottom: 50px;
-			.list_item_container{
+
+			.list_item_container {
 				width: 100%;
 			}
+
 			.u-list-item {
 				border-radius: 4px;
 				background-color: #fff;
@@ -206,6 +234,7 @@
 				display: flex;
 				align-items: center;
 				flex-direction: row;
+
 				.list_item_header {
 					font-size: 12px;
 					display: flex;
@@ -256,8 +285,8 @@
 				}
 			}
 		}
-		
-		.batch_operate_button{
+
+		.batch_operate_button {
 			width: 48px;
 			height: 48px;
 			border-radius: 50%;
@@ -271,8 +300,9 @@
 			align-items: center;
 			justify-content: center;
 			font-size: 12px;
-		}	
-		.batch_operate_area{
+		}
+
+		.batch_operate_area {
 			width: 100%;
 			height: 40px;
 			display: flex;
@@ -283,11 +313,13 @@
 			left: 0;
 			background-color: #fff;
 			border-radius: 4px;
-			.u-button{
+
+			.u-button {
 				margin-left: 70%;
 				margin-right: 10%;
 			}
 		}
+
 		.u-empty {
 			margin-top: 50px !important;
 		}

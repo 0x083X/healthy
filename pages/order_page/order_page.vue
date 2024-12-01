@@ -318,6 +318,7 @@
 						uni.chooseLocation({
 							latitude,
 							longitude,
+							keyword:'医院',
 							success: function(res) {
 								that.place = res;
 								var add_data = that.addressard(res.address);
