@@ -254,7 +254,7 @@
 		},
 		onLoad() {
 			this.initTime = this.formatTimestampDelay(3)
-			this.getNearHospitalInfo(31.8531187,117.2550177)
+			this.getNearHospitalInfo()
 			this.getLocationInfo()
 		},
 		onReady() {
@@ -324,7 +324,8 @@
 					markerId:0,
 					width:20,
 					height:25,
-					...detail
+					latitude,
+					longitude
 				}
 				if(index >= 0){
 					this.markers.splice(index,1)
@@ -357,14 +358,10 @@
 				uni.getLocation({
 					type: "gcj02",
 					success: function(data) {
-						// let latitude = data.latitude;
-						// let longitude = data.longitude;
-						// that.latitude = latitude
-						// that.longitude = longitude
-						let latitude =  31.8531187;
-						let longitude = 117.2550177;
-						that.latitude = 31.8531187
-						that.longitude = 117.2550177
+						let latitude = data.latitude;
+						let longitude = data.longitude;
+						that.latitude = latitude
+						that.longitude = longitude
 						that.circles = [{ //在地图上显示圆
 							latitude,
 							longitude,
@@ -427,9 +424,17 @@
 			},
 			hospitalSelect(e) {
 				this.formData.address = e.name
+				this.formData.hospitalId = e.id
 				this.latitude = e.latitude
 				this.longitude = e.longitude
-				console.log('this.formData.address',this.formData.address)
+				this.MapContext.moveToLocation({
+					latitude: e.latitude,
+					longitude: e.longitude,
+				})
+				setTimeout(()=>{
+					this.currentHospital = e
+					this.showCurrentHospital = true
+				},100)
 				this.$refs.form.validateField('formData.address')
 			},
 			hideKeyboard() {
@@ -548,6 +553,7 @@
 			},
 			// 点击图标切换医院
 			handleTapMarker(e){
+				e.stopPropagation()
 				const { markerId } = e.detail
 				if(!markerId) return
 				const currentHos = this.hospitalList.find(v=>v.id === markerId)
@@ -556,6 +562,8 @@
 					this.MapContext.moveToLocation({
 						latitude,longitude
 					})
+					this.formData.address = currentHos.hospitalName
+					this.formData.hospitalId = currentHos.id
 					setTimeout(()=>{
 						this.currentHospital = currentHos
 						this.showCurrentHospital = true
@@ -625,5 +633,12 @@
 	/deep/.u-action-sheet__item-wrap {
 		max-height: 80vh !important;
 
+	}
+	.scroll-view{
+		.u-reset-button{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 </style>
