@@ -1,7 +1,7 @@
 <template>
 	<view class="pre_order_page">
 		<view  class="home-btn">
-			<u-button type="primary" plain="true" text="去下单"  @click="goToOrder"></u-button>
+			<u-button type="primary" plain="true" text="点击下单"  @click="goToOrder"></u-button>
 		</view>
 		<image class="home-image" src="../../static/home/home.png"></image>
 	</view>
@@ -42,6 +42,8 @@
 		bottom: 30px;
 		width: 100%;
 		box-sizing: border-box;
+		font-size: 22px;
+		font-weight: bold;
 	}
 	/deep/.u-button--plain.u-button--primary{
 		color: #bb6664  !important;
