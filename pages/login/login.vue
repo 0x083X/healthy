@@ -1,6 +1,5 @@
 <template>
 	<view class="content">
-		<view class="header"></view>
 		<view class="main">
 			<u--form
 				labelPosition="left"
@@ -9,9 +8,7 @@
 				:rules="rules"
 			>
 				<u-form-item class="item">
-					<button open-type="chooseAvatar" @chooseavatar="onChooseAvatar" class="avatar">
-						<u--image :src="form.avatar" width="80px" height="80px"></u--image>
-					</button>
+					<image :src="form.avatar" class="logo"></image>
 				</u-form-item>
 				<u-form-item prop="form.nickName" label="称呼:" borderBottom>
 					<u--input
@@ -35,7 +32,7 @@
 		data() {
 			return {
 				form: {
-					avatar: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+					avatar: 'https://junzean.com.cn/images/logo.jpg',
 					nickName: '',
 				},
 				rules: {
@@ -201,6 +198,11 @@
 		.header {
 			height: 100px;
 			width: 100%;
+		}
+		.logo{
+			margin: auto;
+			height: 80px;
+			width: 80px;
 		}
 		.main {
 			flex: 1;

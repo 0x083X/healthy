@@ -447,7 +447,7 @@
 				this.hideKeyboard()
 			},
 			upgradeEndTimeMinDate() {
-				this.initTime = this.formatTimestampDelay(1, this.formatTimestampString(this.formData.startTime))
+				this.initTime = this.formatTimestampDelay(2, this.formatTimestampString(this.formData.startTime))
 			},
 			showEndTimeBoard() {
 				if (!this.formData.startTime) {
