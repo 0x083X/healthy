@@ -20,6 +20,13 @@
 					url: '/pages/order_list/order_list'
 				})
 			}
+		},
+		onLoad(){
+			uni.showToast({
+			title: '您已下单成功，稍后会有陪诊人与您联系，请耐心等待',
+			icon: 'success',
+			duration: 2000
+			})
 		}
 	}
 </script>
