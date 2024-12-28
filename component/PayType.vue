@@ -11,7 +11,6 @@
 			  :key="item.type"
 			  :label="item.name"
 			/>
-		    </u-radio>
 		  </u-radio-group>
 	</view>
 </template>

@@ -1,28 +1,54 @@
 <template>
 	<view class="content">
-		<view class="main">
-			<u--form
-				labelPosition="left"
-				ref="loginForm"
-				:model="form"
-				:rules="rules"
-			>
-				<u-form-item class="item">
-					<image :src="form.avatar" class="logo"></image>
-				</u-form-item>
-				<u-form-item prop="form.nickName" label="称呼:" borderBottom>
-					<u--input
-						v-model="form.nickName"
-						border="none"
-					></u--input>
-				</u-form-item>
-			</u--form>
-		</view>
-		<view class="footer">
-			<!-- <u-button text="微信登录" @click="showGetUserInfoModal" type="success" shape="circle"></u-button> -->
-			<!-- <u-button type="success" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">手机号一键登录</u-button> -->
-			<u-button type="success" @click="wxLogin">登录</u-button>
-		</view>
+    <view style="z-index:99">
+      <u--form
+          labelPosition="left"
+          ref="loginForm"
+          :model="form"
+          :rules="rules"
+      >
+      <view class="main">
+
+          <u-form-item class="item">
+            <image :src="form.avatar" class="logo"></image>
+          </u-form-item>
+<!--          <u-form-item prop="form.nickName" label="称呼:" borderBottom>-->
+<!--            <u&#45;&#45;input-->
+<!--                v-model="form.nickName"-->
+<!--                border="none"-->
+<!--            ></u&#45;&#45;input>-->
+<!--          </u-form-item>-->
+
+      </view>
+      <view class="footer">
+        <u-button  @click="wxLogin" shape="circle" color="#44af9b" plain  text="一键登录"></u-button>
+      </view>
+      <view style="width: 360px">
+        <u-checkbox-group v-model="form.isAgree" >
+          <u-checkbox  :name="1" shape="circle" activeColor="#44af9b"></u-checkbox>
+          <span class="text-12">
+             我已阅 读并同意 <span class="text-decoration" @click="actionshow = true">《会员服务协议》、《小程序隐私政策》</span>
+          </span>
+        </u-checkbox-group>
+      </view>
+      </u--form>
+    </view>
+
+    <image class="home-image" src="@/static/login/login.png"></image>
+    <view>
+      <u-action-sheet  round="10" title="隐私政策" :show="actionshow" @close="actionshow = false">
+        <view class="padding">
+          <view class="text-868686">
+            欢迎使用泽安陪诊官方平台!请您在使用前点击<span class="text-44af9b">《隐私协议》</span>并仔细阅读，如您同意全部内容，请点击同意开始使用我们的服务。
+            若点击"不同意"，您将无法使用我们的产品和服务，并会退出本小程序
+          </view>
+          <view class="flex">
+            <u-button @click="actionshow = false"  :plain="true" shape="circle" :hairline="true" text="不同意退出"></u-button>
+            <u-button  :customStyle="{marginLeft: '8px'}"  @click="agreeCk" shape="circle" color="#44af9b"  text="同意并继续"></u-button>
+          </view>
+        </view>
+      </u-action-sheet>
+    </view>
 	</view>
 </template>
 
@@ -34,6 +60,7 @@
 				form: {
 					avatar: 'https://junzean.com.cn/images/logo.jpg',
 					nickName: '',
+          isAgree:[] // 是否勾选同意用户协议
 				},
 				rules: {
 					"nickName": {
@@ -42,7 +69,8 @@
 						message: '请填写昵称',
 						trigger: ['blur', 'change']
 					}
-				}
+				},
+        actionshow:false
 			}
 		},
 		computed: {
@@ -70,6 +98,7 @@
 				uni.login({
 					provider: 'weixin',
 					success: (loginRes) => {
+            console.log(loginRes)
 						const data = {
 							code: loginRes.code,
 							avatar: this.form.avatar,
@@ -102,11 +131,12 @@
 				})
 			},
 			wxLogin() {
-				if (this.form.nickName) {
+        console.log(this.form.isAgree)
+				if (this.form.isAgree.includes(1)) {
 					this.login()
 				} else {
 					uni.showToast({
-						title: `请输入昵称`,
+						title: `请勾选会员服务协议`,
 						icon: 'none'
 					});
 				}
@@ -115,8 +145,11 @@
 				if (this.form.nickName) {
 					console.log(e)
 				} 
-			}
-			
+			},
+      agreeCk(){
+        this.actionshow = false
+        this.form.isAgree = [1]
+      }
 			
 			
 		// 	showGetUserInfoModal() {
@@ -193,20 +226,17 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 20px;
 		height: calc(100vh - 44px) !important;
-		.header {
-			height: 100px;
-			width: 100%;
-		}
 		.logo{
 			margin: auto;
-			height: 80px;
-			width: 80px;
+			height: 160px;
+			width: 160px;
+      border-radius: 50%;
 		}
 		.main {
 			flex: 1;
 			width: 100%;
+      margin-top: 200px;
 			.avatar {
 				display: flex;
 				flex-direction: column;
@@ -224,9 +254,37 @@
 		.footer {
 			display: flex;
 			align-items: center;
-			padding: 15px;
-			height: 200px;
+			padding:  15px 0;
 			width: 100%;
+      position: relative;
+      bottom: 0;
 		}
 	}
+  .home-image{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+  }
+  .text-12{
+    font-size: 12px;
+    color: white;
+  }
+  .text-decoration{
+    scroll-padding-left: 10px;
+    text-decoration: underline;
+  }
+  .flex{
+    display: flex;
+    padding-top: 20rpx;
+  }
+  .padding{
+    padding: 40rpx;
+    text-align: left;
+  }
+  .text-868686{
+    color: #868686;
+  }
+  .text-44af9b{
+    color: #44af9b;
+  }
 </style>
