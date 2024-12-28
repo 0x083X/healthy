@@ -31,20 +31,25 @@
 			this.processQueue();
 		},
 		methods: {
-			addDanmu(text) {
+			addDanmu(text, isUnshift = false) {
 				const duration = this.calculateDuration(text); // 根据文本长度计算持续时间
 				const delay = Math.random() * 5; // 随机延迟0到5秒
 				const color = this.getRandomColor(); // 获取随机颜色
 				const id = Date.now(); // 唯一标识符
-
-				this.danmuQueue.push({
+				const data = {
 					text,
 					duration,
 					delay,
 					color,
 					id
-				});
+				}
+				if (isUnshift) {
+					this.danmuQueue.unshift(data)
+				} else {
+					this.danmuQueue.push(data)
+				}
 			},
+
 			async getData() {
 				const res = await request({
 					url: 'api/get/barrage',
@@ -83,7 +88,7 @@
 						}
 					}
 				}
-				setTimeout(this.processQueue,100)
+				setTimeout(this.processQueue, 100)
 			},
 			handleAnimationEnd(trackIndex, danmuIndex) {
 				const danmu = this.tracks[trackIndex].danmus[danmuIndex]

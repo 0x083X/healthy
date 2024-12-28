@@ -1,6 +1,6 @@
 <template>
 	<view class="pre_order_page">
-		<barrage-list class="barrage"></barrage-list>
+		<barrage-list class="barrage" ref="barrageList"></barrage-list>
 		<image style="width: 100%" :src="homeImage"></image>
 		<view class="order-box">
 			<view class="order-item">
@@ -13,9 +13,11 @@
 		</view>
 
 		<u-notice-bar color="#44af9b" bgColor="#ecf7f5" :text="noticeText"></u-notice-bar>
-		<view class="margin">
-			<u-swiper :list="swiperList" autoplay circular />
-		</view>
+		<swiper autoplay circular indicator-dots class="swiper">
+				<swiper-item v-for="(item,index) in swiperList" :key="index">
+					<image :src="item" mode="widthFix"></image>
+				</swiper-item>
+		</swiper>
 		<view class="send-barrage">
 			<input placeholder="善语结善缘" v-model="content" maxlength="20" placeholder-style="color: #fff;"></input>
 			<button @click="sendBarrage">发送</button>
@@ -32,7 +34,7 @@
 				swiperList: [1, 2, 3, 4, 5].map(m => this.$domain + `images/swiper/swiper${m}.png`),
 				noticeText: '如有疑问，请联系客服电话17355071759',
 				homeImage: this.$domain + 'images/home/home.png',
-				content:'',
+				content: '',
 			}
 		},
 		components: {
@@ -45,28 +47,28 @@
 				})
 			},
 			// 发送弹幕
-			sendBarrage(){
-				if(!this.content) return
+			sendBarrage() {
+				if (!this.content) return
 				const data = {
-					content:this.content
+					content: this.content
 				}
 				request({
 					url: 'api/add/barrage',
 					data,
 					method: 'POST'
-				}).then(res=>{
-					if(res.data.status === 0){
+				}).then(res => {
+					if (res.data.status === 0) {
 						uni.showToast({
-							icon:'none',
-							title:res.data.message
+							icon: 'none',
+							title: res.data.message
 						})
+						this.$refs.barrageList.addDanmu(this.content, true)
 						this.content = ''
-					}else{
+					} else {
 						uni.showToast({
-							icon:'error',
-							title:res.data.message
+							icon: 'error',
+							title: res.data.message
 						})
-						
 					}
 				})
 			}
@@ -81,7 +83,8 @@
 		left: 0;
 		width: 100%;
 	}
-	.send-barrage{
+
+	.send-barrage {
 		display: flex;
 		align-items: center;
 		position: fixed;
@@ -92,8 +95,9 @@
 		font-size: 30rpx;
 		box-sizing: border-box;
 		padding: 0 20rpx;
-		box-shadow: 0 10px rgba(0,0,0,.5);
-		input{
+		box-shadow: 0 10px rgba(0, 0, 0, .5);
+
+		input {
 			flex: 1;
 			height: 70rpx;
 			border-radius: 20rpx;
@@ -101,19 +105,29 @@
 			padding: 0 20rpx;
 			color: #fff;
 		}
-		button{
+
+		button {
 			height: 70rpx;
 			width: 140rpx;
 			line-height: 70rpx;
 			border-radius: 20rpx;
 			margin-left: 20rpx;
 			font-size: 30rpx;
-			border:1px solid #44af9b;
+			border: 1px solid #44af9b;
 			background-color: #44af9b;
 			color: #fff;
-			&::after{
-				border:none;
+
+			&::after {
+				border: none;
 			}
+		}
+	}
+
+	.swiper{
+		margin: 40rpx 0 120rpx 0;
+		image{
+			height: 100%;
+			width: 100%;
 		}
 	}
 
@@ -126,10 +140,6 @@
 		background-color: #F6F6F6;
 	}
 
-	//.home-image{
-	//	height: 100%;
-	//	width: 100%;
-	//}
 	.home-btn {
 		//position: absolute;
 		//bottom: 30px;
@@ -139,16 +149,8 @@
 		font-weight: bold;
 	}
 
-	///deep/.u-button--plain.u-button--primary{
-	//	color: #bb6664  !important;
-	//	border-color: #bb6664;
-	//}
 	.padding {
 		padding: 20rpx;
-	}
-
-	.margin {
-		margin: 20rpx;
 	}
 
 	.color {
