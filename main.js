@@ -12,6 +12,7 @@ Vue.prototype.$md5 = Md5
 Vue.use(uView)
 Vue.config.productionTip = false
 Vue.prototype.$request = request
+Vue.prototype.$domain = 'https://junzean.com.cn/'
 App.mpType = 'app'
 const app = new Vue({
 	store,

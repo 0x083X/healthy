@@ -18,7 +18,7 @@
 </template>
 
 <script>
-	import PayType from '../../component/PayType.vue'
+	import PayType from '../../components/PayType.vue'
 	import payTypeConfig from '../../utils/payTypeConfig'
 	import wxmini from '../../mixins/wxmini'
 	export default {

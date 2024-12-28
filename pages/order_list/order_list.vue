@@ -110,8 +110,6 @@
 			// 	};
 			// },
 			scrollToBottom() {
-				console.log('this.total', this.total);
-				console.log('this.listData', this.listData);
 				setTimeout(() => {
 					if (this.total < this.listData.length) {
 						return

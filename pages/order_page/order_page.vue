@@ -108,7 +108,7 @@
 			</u-modal>
 			<!-- 错误提示 -->
 			<u-toast ref="uToast"></u-toast>
-			<u-button type="primary" text="提交" customStyle="margin-top: 50px" @click="this.orderDetailShow = true"
+			<u-button type="primary" text="提交" customStyle="margin-top: 50px;" @click="this.orderDetailShow = true"
 				size="large"></u-button>
 		</view>
 	</view>
@@ -640,5 +640,13 @@
 			justify-content: center;
 			align-items: center;
 		}
+	}
+	/deep/ .u-form-item__body__left__content__label{
+		font-size: 36rpx !important;
+		margin: 20rpx 0;
+		font-weight: 500;
+	}
+	.submit-btn{
+		background-color: #44af9b;
 	}
 </style>
