@@ -18,7 +18,9 @@
 					<image :src="item" mode="widthFix"></image>
 				</swiper-item>
 		</swiper>
-		<view class="send-barrage">
+    <image class="poster" :src="homeImage1"></image>
+
+    <view class="send-barrage">
 			<input placeholder="善语结善缘" v-model="content" maxlength="20" placeholder-style="color: #fff;"></input>
 			<button @click="sendBarrage">发送</button>
 		</view>
@@ -34,6 +36,7 @@
 				swiperList: [1, 2, 3, 4, 5].map(m => this.$domain + `images/swiper/swiper${m}.png`),
 				noticeText: '如有疑问，请联系客服电话17355071759',
 				homeImage: this.$domain + 'images/home/home.png',
+        homeImage1: this.$domain + 'images/home/poster2.0.jpg',
 				content: '',
 			}
 		},
@@ -72,7 +75,10 @@
 					}
 				})
 			}
-		}
+		},
+    onLoad() {
+      console.log(this.swiperList)
+    },
 	}
 </script>
 
@@ -124,7 +130,7 @@
 	}
 
 	.swiper{
-		margin: 40rpx 0 120rpx 0;
+		margin: 40rpx 0 40rpx 0;
 		image{
 			height: 100%;
 			width: 100%;
@@ -177,4 +183,8 @@
 		color: #868686;
 		font-size: 28rpx;
 	}
+  .poster{
+    width: 100%;
+    height: 200rpx;
+  }
 </style>
